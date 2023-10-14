@@ -71,10 +71,7 @@ contract Task3 with Deployable {
     let sender: Address = msg.from;
     let wallet: Address = sender(); 
 
-    if(sender != self.jettonAddressA && sender != self.jettonAddressB)
-    {
-      throw(132);
-    }
+    require(sender == self.jettonAddressA || sender == self.jettonAddressB, "Wrong jetton address");
 
     if(wallet == self.owner) {
       if(sender == self.jettonAddressA) {
