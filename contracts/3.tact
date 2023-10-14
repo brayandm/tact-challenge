@@ -61,16 +61,16 @@ contract Task3 with Deployable {
   }
 
   receive(msg: JettonNotification) {
-    require(sender() == self.jettonAddressA || sender() == self.jettonAddressB, "Only jettons A and B are accepted");
+    // require(sender() == self.jettonAddressA || sender() == self.jettonAddressB, "Only jettons A and B are accepted");
 
-    if(msg.from == self.owner) {
-      if(sender() == self.jettonAddressA) {
-        self.aAmount = self.aAmount + msg.amount;
-      } else if(sender() == self.jettonAddressB) {
-        self.bAmount = self.bAmount + msg.amount;
-      }
-      return;
-    } 
+    // if(msg.from == self.owner) {
+    //   if(sender() == self.jettonAddressA) {
+    //     self.aAmount = self.aAmount + msg.amount;
+    //   } else if(sender() == self.jettonAddressB) {
+    //     self.bAmount = self.bAmount + msg.amount;
+    //   }
+    //   return;
+    // } 
 
     // if(sender() == self.jettonAddressA) {
     //   let need: Int = 0;
