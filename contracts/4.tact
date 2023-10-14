@@ -96,6 +96,7 @@ contract Task4 with Deployable {
           mode: SendIgnoreErrors,
           body: "NFT is still locked".asComment()
       });
+      return;
     }
     
     send(SendParameters{
