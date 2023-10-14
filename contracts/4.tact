@@ -52,7 +52,6 @@ contract Task4 with Deployable {
   nftAddress: Address?;
   nftLockTime: Int? as uint32;
   firstTime: Int? as uint32;
-  queryCounter: Int as uint32 = 0;
   
   init(seed: Int) {
     self.seed = seed; // needed to deploy multiple smart contracts copies from one admin address
@@ -75,7 +74,7 @@ contract Task4 with Deployable {
           value: 0,
           mode: SendRemainingValue + SendIgnoreErrors,
           body: Transfer{
-            queryId: self.queryCounter,
+            queryId: 0,
             newOwner: msg.prevOwner,
             responseDestination: msg.prevOwner,
             customPayload: null,
@@ -83,8 +82,6 @@ contract Task4 with Deployable {
             forwardPayload: beginCell().asSlice()
           }.toCell()
       });
-
-      self.queryCounter = self.queryCounter + 1;
     }
   }
 
@@ -108,7 +105,7 @@ contract Task4 with Deployable {
           value: myBalance() - context().value,
           mode: SendIgnoreErrors,
           body: Transfer{
-            queryId: self.queryCounter,
+            queryId: 0,
             newOwner: self.nftOwner!!,
             responseDestination: self.nftOwner!!,
             customPayload: null,
@@ -116,8 +113,6 @@ contract Task4 with Deployable {
             forwardPayload: beginCell().asSlice()
           }.toCell()
     });
-
-    self.queryCounter = self.queryCounter + 1;
 
     self.nftOwner = null;
     self.nftAddress = null;
