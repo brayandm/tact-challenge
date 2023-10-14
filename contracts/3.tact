@@ -73,8 +73,6 @@ contract Task3 with Deployable {
     } 
 
     if(sender() == self.jettonAddressA) {
-      self.aAmount = self.aAmount + msg.amount;
-
       let need: Int = msg.amount * self.bAmount / self.aAmount;
 
       if(self.bAmount < need) {
@@ -96,6 +94,7 @@ contract Task3 with Deployable {
       }
       else
       {
+        self.aAmount = self.aAmount + msg.amount;
         self.bAmount = self.bAmount - need;
 
         send(SendParameters{
@@ -116,8 +115,6 @@ contract Task3 with Deployable {
       }
 
     } else if(sender() == self.jettonAddressB) {
-      self.bAmount = self.bAmount + msg.amount;
-
       let need: Int = msg.amount * self.aAmount / self.bAmount;
 
       if(self.aAmount < need) {
@@ -139,6 +136,7 @@ contract Task3 with Deployable {
       }
       else
       {
+        self.bAmount = self.bAmount + msg.amount;
         self.aAmount = self.aAmount - need;
 
         send(SendParameters{
