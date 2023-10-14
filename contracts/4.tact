@@ -102,23 +102,32 @@ contract Task4 with Deployable {
     send(SendParameters{
           to: self.nftAddress!!,
           bounce: true,
-          value: 0,
-          mode: SendRemainingBalance + SendIgnoreErrors,
+          value: myBalance() - context().value,
+          mode: SendIgnoreErrors,
           body: Transfer{
             queryId: 0,
             newOwner: self.nftOwner!!,
             responseDestination: self.nftOwner!!,
             customPayload: null,
-            forwardAmount: 0,
+            forwardAmount: myBalance() - context().value,
             forwardPayload: beginCell().asSlice()
           }.toCell()
-      });
+    });
+
+    self.nftOwner = null;
+    self.nftAddress = null;
+    self.nftLockTime = null;
+    self.firstTime = null;
   }
 
   get fun time(): Int {
     if(self.nftLockTime != null && self.firstTime != null)
     {
-      return max(self.nftLockTime!! - (now() - self.firstTime!!), 0);
+      if((now() - self.firstTime!!) < self.nftLockTime!!)
+      {
+        return self.nftLockTime!! - (now() - self.firstTime!!);
+      }
+      return 0;
     }
     return 0;
   }
