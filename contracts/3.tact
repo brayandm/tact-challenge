@@ -102,7 +102,7 @@ contract Task3 with Deployable {
             responseDestination: null,
             customPayload: null,
             forwardTonAmount: 0,
-            forwardPayload: beginCell().asSlice()
+            forwardPayload: msg.forwardPayload
           }.toCell()
         });
       }
@@ -123,7 +123,7 @@ contract Task3 with Deployable {
             responseDestination: null,
             customPayload: null,
             forwardTonAmount: 0,
-            forwardPayload: beginCell().asSlice()
+            forwardPayload: msg.forwardPayload
           }.toCell()
         });
       }
@@ -148,7 +148,7 @@ contract Task3 with Deployable {
             responseDestination: null,
             customPayload: null,
             forwardTonAmount: 0,
-            forwardPayload: beginCell().asSlice()
+            forwardPayload: msg.forwardPayload
           }.toCell()
         });
       }
@@ -169,7 +169,7 @@ contract Task3 with Deployable {
             responseDestination: null,
             customPayload: null,
             forwardTonAmount: 0,
-            forwardPayload: beginCell().asSlice()
+            forwardPayload: msg.forwardPayload
           }.toCell()
         });
       }
