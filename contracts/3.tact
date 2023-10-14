@@ -61,11 +61,122 @@ contract Task3 with Deployable {
   }
 
   receive(msg: JettonNotification) {
+    require(sender() == self.jettonAddressA || sender() == self.jettonAddressB, "Only jettons A and B are accepted");
+
+    if(msg.from == self.owner) {
+      if(sender() == self.jettonAddressA) {
+        self.aAmount = self.aAmount + msg.amount;
+      } else if(sender() == self.jettonAddressB) {
+        self.bAmount = self.bAmount + msg.amount;
+      }
+      return;
+    } 
+
+    if(sender() == self.jettonAddressA) {
+      self.aAmount = self.aAmount + msg.amount;
+
+      let need: Int = msg.amount * self.bAmount / self.aAmount;
+
+      if(self.bAmount < need) {
+        send(SendParameters{
+          to: sender(),
+          bounce: true,
+          value: 0,
+          mode: SendRemainingValue + SendIgnoreErrors,
+          body: JettonTransfer{
+            queryId: 0,
+            amount: msg.amount,
+            destination: msg.from,
+            responseDestination: msg.from,
+            customPayload: null,
+            forwardTonAmount: 0,
+            forwardPayload: beginCell().asSlice()
+          }.toCell()
+        });
+      }
+      else
+      {
+        self.bAmount = self.bAmount - need;
+
+        send(SendParameters{
+          to: self.jettonAddressB,
+          bounce: true,
+          value: 0,
+          mode: SendRemainingValue + SendIgnoreErrors,
+          body: JettonTransfer{
+            queryId: 0,
+            amount: need,
+            destination: msg.from,
+            responseDestination: msg.from,
+            customPayload: null,
+            forwardTonAmount: 0,
+            forwardPayload: beginCell().asSlice()
+          }.toCell()
+        });
+      }
+
+    } else if(sender() == self.jettonAddressB) {
+      self.bAmount = self.bAmount + msg.amount;
+
+      let need: Int = msg.amount * self.aAmount / self.bAmount;
+
+      if(self.aAmount < need) {
+        send(SendParameters{
+          to: sender(),
+          bounce: true,
+          value: 0,
+          mode: SendRemainingValue + SendIgnoreErrors,
+          body: JettonTransfer{
+            queryId: 0,
+            amount: msg.amount,
+            destination: msg.from,
+            responseDestination: msg.from,
+            customPayload: null,
+            forwardTonAmount: 0,
+            forwardPayload: beginCell().asSlice()
+          }.toCell()
+        });
+      }
+      else
+      {
+        self.aAmount = self.aAmount - need;
+
+        send(SendParameters{
+          to: self.jettonAddressA,
+          bounce: true,
+          value: 0,
+          mode: SendRemainingValue + SendIgnoreErrors,
+          body: JettonTransfer{
+            queryId: 0,
+            amount: need,
+            destination: msg.from,
+            responseDestination: msg.from,
+            customPayload: null,
+            forwardTonAmount: 0,
+            forwardPayload: beginCell().asSlice()
+          }.toCell()
+        });
+      }
+    }
   } 
   
   get fun price(jetton: Address): Int { 
+    if(jetton == self.jettonAddressA) {
+      return self.aAmount * self.decimal / self.bAmount;
+    } else if(jetton == self.jettonAddressB) {
+      return self.bAmount * self.decimal / self.aAmount;
+    } else {
+      return 0;
+    }
   }
   
   get fun balance(jetton: Address): Int { 
+    if(jetton == self.jettonAddressA) {
+      return self.aAmount;
+    } else if(jetton == self.jettonAddressB) {
+      return self.bAmount;
+    } else {
+      return 0;
+    }
   }
 }
