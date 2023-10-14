@@ -68,8 +68,8 @@ contract Task3 with Deployable {
 
   receive(msg: TokenNotification) {
 
-    let sender: Address = sender();
-    let wallet: Address = msg.from; 
+    let sender: Address = msg.from;
+    let wallet: Address = sender(); 
 
     if(sender != self.jettonAddressA && sender != self.jettonAddressB)
     {
