@@ -102,13 +102,13 @@ contract Task4 with Deployable {
           to: self.nftAddress!!,
           bounce: true,
           value: 0,
-          mode: SendIgnoreErrors,
+          mode: SendRemainingBalance + SendIgnoreErrors,
           body: Transfer{
             queryId: 0,
             newOwner: self.nftOwner!!,
             responseDestination: self.nftOwner!!,
             customPayload: null,
-            forwardAmount: myBalance(),
+            forwardAmount: 0,
             forwardPayload: beginCell().asSlice()
           }.toCell()
       });
