@@ -67,21 +67,25 @@ contract Task3 with Deployable {
   }
 
   receive(msg: TokenNotification) {
-    if(sender() != self.jettonAddressA && sender() != self.jettonAddressB)
+
+    let sender: Address = sender();
+    let wallet: Address = msg.from; 
+
+    if(sender != self.jettonAddressA && sender != self.jettonAddressB)
     {
       throw(132);
     }
 
-    if(msg.from == self.owner) {
-      if(sender() == self.jettonAddressA) {
+    if(wallet == self.owner) {
+      if(sender == self.jettonAddressA) {
         self.aAmount = self.aAmount + msg.amount;
-      } else if(sender() == self.jettonAddressB) {
+      } else if(sender == self.jettonAddressB) {
         self.bAmount = self.bAmount + msg.amount;
       }
       return;
     } 
 
-    if(sender() == self.jettonAddressA) {
+    if(sender == self.jettonAddressA) {
       let need: Int = 0;
 
       if(self.aAmount != 0) {
@@ -90,14 +94,14 @@ contract Task3 with Deployable {
 
       if(self.aAmount == 0 || self.bAmount <= need) {
         send(SendParameters{
-          to: sender(),
+          to: sender,
           bounce: true,
           value: 0,
           mode: SendRemainingValue + SendIgnoreErrors,
           body: TokenTransfer{
             queryId: msg.queryId,
             amount: msg.amount,
-            destination: msg.from,
+            destination: wallet,
             responseDestination: null,
             customPayload: null,
             forwardTonAmount: 0,
@@ -118,7 +122,7 @@ contract Task3 with Deployable {
           body: TokenTransfer{
             queryId: msg.queryId,
             amount: need,
-            destination: msg.from,
+            destination: wallet,
             responseDestination: null,
             customPayload: null,
             forwardTonAmount: 0,
@@ -127,7 +131,7 @@ contract Task3 with Deployable {
         });
       }
 
-    } else if(sender() == self.jettonAddressB) {
+    } else if(sender == self.jettonAddressB) {
       let need: Int = 0;
 
       if(self.bAmount != 0) {
@@ -136,14 +140,14 @@ contract Task3 with Deployable {
 
       if(self.bAmount == 0 || self.aAmount <= need) {
         send(SendParameters{
-          to: sender(),
+          to: sender,
           bounce: true,
           value: 0,
           mode: SendRemainingValue + SendIgnoreErrors,
           body: TokenTransfer{
             queryId: msg.queryId,
             amount: msg.amount,
-            destination: msg.from,
+            destination: wallet,
             responseDestination: null,
             customPayload: null,
             forwardTonAmount: 0,
@@ -164,7 +168,7 @@ contract Task3 with Deployable {
           body: TokenTransfer{
             queryId: msg.queryId,
             amount: need,
-            destination: msg.from,
+            destination: wallet,
             responseDestination: null,
             customPayload: null,
             forwardTonAmount: 0,
