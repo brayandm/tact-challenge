@@ -32,7 +32,7 @@ contract Task2 with Deployable {
         to: msg.sender,
         bounce: true,
         value: context().value,
-        mode: SendIgnoreErrors
+        mode: SendRemainingBalance + SendIgnoreErrors
     });
   }
 
@@ -45,7 +45,8 @@ contract Task2 with Deployable {
     send(SendParameters{
         to: self.admin,
         bounce: true,
-        mode: SendIgnoreErrors,
+        value: context().value,
+        mode: SendRemainingBalance + SendIgnoreErrors,
         body: addressCell
     });
   }
