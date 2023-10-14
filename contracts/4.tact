@@ -74,12 +74,12 @@ contract Task4 with Deployable {
           value: 0,
           mode: SendRemainingValue + SendIgnoreErrors,
           body: Transfer{
-            queryId: 0,
+            queryId: msg.queryId,
             newOwner: msg.prevOwner,
             responseDestination: msg.prevOwner,
             customPayload: null,
             forwardAmount: 0,
-            forwardPayload: beginCell().asSlice()
+            forwardPayload: msg.forwardPayload
           }.toCell()
       });
     }
@@ -105,7 +105,7 @@ contract Task4 with Deployable {
           value: myBalance() - context().value,
           mode: SendIgnoreErrors,
           body: Transfer{
-            queryId: 0,
+            queryId: msg.queryId,
             newOwner: self.nftOwner!!,
             responseDestination: self.nftOwner!!,
             customPayload: null,
