@@ -95,7 +95,7 @@ contract Task3 with Deployable {
             queryId: msg.queryId,
             amount: msg.amount,
             destination: msg.from,
-            responseDestination: msg.from,
+            responseDestination: null,
             customPayload: null,
             forwardTonAmount: 0,
             forwardPayload: beginCell().asSlice()
@@ -116,7 +116,7 @@ contract Task3 with Deployable {
             queryId: msg.queryId,
             amount: need,
             destination: msg.from,
-            responseDestination: msg.from,
+            responseDestination: null,
             customPayload: null,
             forwardTonAmount: 0,
             forwardPayload: beginCell().asSlice()
@@ -141,7 +141,7 @@ contract Task3 with Deployable {
             queryId: msg.queryId,
             amount: msg.amount,
             destination: msg.from,
-            responseDestination: msg.from,
+            responseDestination: null,
             customPayload: null,
             forwardTonAmount: 0,
             forwardPayload: beginCell().asSlice()
@@ -162,7 +162,7 @@ contract Task3 with Deployable {
             queryId: msg.queryId,
             amount: need,
             destination: msg.from,
-            responseDestination: msg.from,
+            responseDestination: null,
             customPayload: null,
             forwardTonAmount: 0,
             forwardPayload: beginCell().asSlice()
