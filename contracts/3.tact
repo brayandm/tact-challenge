@@ -74,9 +74,9 @@ contract Task3 with Deployable {
     require(sender == self.jettonAddressA || sender == self.jettonAddressB, "Wrong jetton address");
 
     if(wallet == self.owner) {
-      if(sender == self.jettonAddressA) {
+      if(sender == self.jettonAddressB) {
         self.aAmount = self.aAmount + msg.amount;
-      } else if(sender == self.jettonAddressB) {
+      } else if(sender == self.jettonAddressA) {
         self.bAmount = self.bAmount + msg.amount;
       }
       return;
