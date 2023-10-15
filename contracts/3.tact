@@ -59,8 +59,8 @@ contract Task3 with Deployable {
 
   init(admin: Address, newJettonAddressA: Address, newJettonAddressB: Address) {
     self.owner = admin;
-    self.jettonAddressA = newJettonAddressB;
-    self.jettonAddressB = newJettonAddressA;
+    self.jettonAddressA = newJettonAddressA;
+    self.jettonAddressB = newJettonAddressB;
     self.aAmount = 0;
     self.bAmount = 0;
     self.decimal = 1000000000;
@@ -74,13 +74,22 @@ contract Task3 with Deployable {
     require(sender == self.jettonAddressA || sender == self.jettonAddressB, "Wrong jetton address");
 
     if(wallet == self.owner) {
-      if(sender == self.jettonAddressB) {
+      if(sender == self.jettonAddressA) {
         self.aAmount = self.aAmount + msg.amount;
-      } else if(sender == self.jettonAddressA) {
+      } else if(sender == self.jettonAddressB) {
         self.bAmount = self.bAmount + msg.amount;
       }
       return;
-    } 
+    }
+
+    if(sender == self.jettonAddressA)
+    {
+      sender = self.jettonAddressB;
+    }
+    else if(sender == self.jettonAddressB)
+    {
+      sender = self.jettonAddressA;
+    }
 
     if(sender == self.jettonAddressA) {
       let need: Int = 0;
@@ -177,9 +186,9 @@ contract Task3 with Deployable {
   } 
   
   get fun price(jetton: Address): Int { 
-    if(jetton == self.jettonAddressA) {
+    if(jetton == self.jettonAddressB) {
       return self.aAmount * self.decimal / self.bAmount;
-    } else if(jetton == self.jettonAddressB) {
+    } else if(jetton == self.jettonAddressA) {
       return self.bAmount * self.decimal / self.aAmount;
     } else {
       return 0;
@@ -187,9 +196,9 @@ contract Task3 with Deployable {
   }
   
   get fun balance(jetton: Address): Int { 
-    if(jetton == self.jettonAddressA) {
+    if(jetton == self.jettonAddressB) {
       return self.aAmount;
-    } else if(jetton == self.jettonAddressB) {
+    } else if(jetton == self.jettonAddressA) {
       return self.bAmount;
     } else {
       return 0;
