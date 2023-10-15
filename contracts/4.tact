@@ -92,7 +92,7 @@ contract Task4 with Deployable {
           to: sender(),
           bounce: true,
           value: 0,
-          mode: SendIgnoreErrors,
+          mode: SendRemainingValue + SendIgnoreErrors,
           body: "NFT is still locked".asComment()
       });
     }
@@ -120,11 +120,12 @@ contract Task4 with Deployable {
   }
 
   get fun time(): Int {
+    let now: Int = now();
     if(self.nftLockTime != null)
     {
-      if(self.nftLockTime!! >= now())
+      if(self.nftLockTime!! >= now)
       {
-        return self.nftLockTime!! - now();
+        return self.nftLockTime!! - now;
       }
       else
       {
