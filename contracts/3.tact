@@ -82,14 +82,14 @@ contract Task3 with Deployable {
       return;
     }
 
-    // if(sender == self.jettonAddressA)
-    // {
-    //   sender = self.jettonAddressB;
-    // }
-    // else if(sender == self.jettonAddressB)
-    // {
-    //   sender = self.jettonAddressA;
-    // }
+    if(sender == self.jettonAddressA)
+    {
+      sender = self.jettonAddressB;
+    }
+    else if(sender == self.jettonAddressB)
+    {
+      sender = self.jettonAddressA;
+    }
 
     if(sender == self.jettonAddressA) {
       let need: Int = 0;
