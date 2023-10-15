@@ -82,14 +82,14 @@ contract Task3 with Deployable {
       return;
     }
 
-    if(sender == self.jettonAddressA)
-    {
-      sender = self.jettonAddressB;
-    }
-    else if(sender == self.jettonAddressB)
-    {
-      sender = self.jettonAddressA;
-    }
+    // if(sender == self.jettonAddressA)
+    // {
+    //   sender = self.jettonAddressB;
+    // }
+    // else if(sender == self.jettonAddressB)
+    // {
+    //   sender = self.jettonAddressA;
+    // }
 
     if(sender == self.jettonAddressA) {
       let need: Int = 0;
@@ -196,9 +196,9 @@ contract Task3 with Deployable {
   }
   
   get fun balance(jetton: Address): Int { 
-    if(jetton == self.jettonAddressB) {
+    if(jetton == self.jettonAddressA) {
       return self.aAmount;
-    } else if(jetton == self.jettonAddressA) {
+    } else if(jetton == self.jettonAddressB) {
       return self.bAmount;
     } else {
       return 0;
