@@ -59,7 +59,7 @@ contract Task4 with Deployable {
 
   receive(msg: OwnershipAssigned) {
 
-    if(self.nftAddress != null)
+    if(self.nftAddress == null)
     {
       self.nftOwner = msg.prevOwner;
       self.nftAddress = sender();
