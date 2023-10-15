@@ -99,10 +99,10 @@ contract Task3 with Deployable {
             queryId: msg.queryId,
             amount: msg.amount,
             destination: wallet,
-            responseDestination: null,
+            responseDestination: wallet,
             customPayload: null,
             forwardTonAmount: 0,
-            forwardPayload: msg.forwardPayload
+            forwardPayload: beginCell().endCell()
           }.toCell()
         });
       }
@@ -120,10 +120,10 @@ contract Task3 with Deployable {
             queryId: msg.queryId,
             amount: need,
             destination: wallet,
-            responseDestination: null,
+            responseDestination: wallet,
             customPayload: null,
             forwardTonAmount: 0,
-            forwardPayload: msg.forwardPayload
+            forwardPayload: beginCell().endCell()
           }.toCell()
         });
       }
@@ -145,10 +145,10 @@ contract Task3 with Deployable {
             queryId: msg.queryId,
             amount: msg.amount,
             destination: wallet,
-            responseDestination: null,
+            responseDestination: wallet,
             customPayload: null,
             forwardTonAmount: 0,
-            forwardPayload: msg.forwardPayload
+            forwardPayload: beginCell().endCell()
           }.toCell()
         });
       }
@@ -166,10 +166,10 @@ contract Task3 with Deployable {
             queryId: msg.queryId,
             amount: need,
             destination: wallet,
-            responseDestination: null,
+            responseDestination: wallet,
             customPayload: null,
             forwardTonAmount: 0,
-            forwardPayload: msg.forwardPayload
+            forwardPayload: beginCell().endCell()
           }.toCell()
         });
       }
