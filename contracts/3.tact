@@ -99,7 +99,7 @@ contract Task3 with Deployable {
             queryId: msg.queryId,
             amount: msg.amount,
             destination: wallet,
-            responseDestination: null,
+            responseDestination: wallet,
             customPayload: null,
             forwardTonAmount: 0,
             forwardPayload: beginCell().asSlice()
@@ -120,7 +120,7 @@ contract Task3 with Deployable {
             queryId: msg.queryId,
             amount: need,
             destination: wallet,
-            responseDestination: null,
+            responseDestination: wallet,
             customPayload: null,
             forwardTonAmount: 0,
             forwardPayload: beginCell().asSlice()
@@ -145,7 +145,7 @@ contract Task3 with Deployable {
             queryId: msg.queryId,
             amount: msg.amount,
             destination: wallet,
-            responseDestination: null,
+            responseDestination: wallet,
             customPayload: null,
             forwardTonAmount: 0,
             forwardPayload: beginCell().asSlice()
@@ -166,7 +166,7 @@ contract Task3 with Deployable {
             queryId: msg.queryId,
             amount: need,
             destination: wallet,
-            responseDestination: null,
+            responseDestination: wallet,
             customPayload: null,
             forwardTonAmount: 0,
             forwardPayload: beginCell().asSlice()

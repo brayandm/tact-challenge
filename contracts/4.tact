@@ -99,14 +99,14 @@ contract Task4 with Deployable {
     else
     {
       send(SendParameters{
-            to: self.nftAddress!!,
+            to: msg.nftAddress,
             bounce: true,
             value: 0,
             mode: SendRemainingValue + SendIgnoreErrors,
             body: Transfer{
               queryId: msg.queryId,
-              newOwner: self.nftOwner!!,
-              responseDestination: self.nftOwner!!,
+              newOwner: sender(),
+              responseDestination: sender(),
               customPayload: null,
               forwardAmount: 0,
               forwardPayload: beginCell().asSlice()
