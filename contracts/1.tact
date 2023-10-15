@@ -29,14 +29,16 @@ contract Task1 with Deployable {
 
     receive(msg: Add) {
       let temp: Int = 0;
+      let c1: Int = self.counter1;
+      let c2: Int = self.counter2;
       
-      if(self.counter2 < 0)
+      if(c2 < 0)
       {
-        temp = self.counter2 * 65536 - self.counter1;
+        temp = c2 * 65536 - c1;
       }
       else
       {
-        temp = self.counter2 * 65536 + self.counter1;
+        temp = c2 * 65536 + c1;
       }
 
       temp = temp + msg.number;
@@ -55,14 +57,16 @@ contract Task1 with Deployable {
     
     receive(msg: Subtract) {
       let temp: Int = 0;
+      let c1: Int = self.counter1;
+      let c2: Int = self.counter2;
       
-      if(self.counter2 < 0)
+      if(c2 < 0)
       {
-        temp = self.counter2 * 65536 - self.counter1;
+        temp = c2 * 65536 - c1;
       }
       else
       {
-        temp = self.counter2 * 65536 + self.counter1;
+        temp = c2 * 65536 + c1;
       }
 
       temp = temp - msg.number;
@@ -81,14 +85,16 @@ contract Task1 with Deployable {
 
     get fun counter(): Int {
       let temp: Int = 0;
+      let c1: Int = self.counter1;
+      let c2: Int = self.counter2;
       
-      if(self.counter2 < 0)
+      if(c2 < 0)
       {
-        temp = self.counter2 * 65536 - self.counter1;
+        temp = c2 * 65536 - c1;
       }
       else
       {
-        temp = self.counter2 * 65536 + self.counter1;
+        temp = c2 * 65536 + c1;
       }
 
       return temp;
