@@ -94,15 +94,15 @@ contract Task3 with Deployable {
           to: sender,
           bounce: true,
           value: 0,
-          mode: SendIgnoreErrors,
+          mode: SendRemainingValue + SendIgnoreErrors,
           body: TokenTransfer{
             queryId: msg.queryId,
             amount: msg.amount,
             destination: wallet,
-            responseDestination: wallet,
+            responseDestination: null,
             customPayload: null,
             forwardTonAmount: 0,
-            forwardPayload: msg.forwardPayload
+            forwardPayload: beginCell().asSlice()
           }.toCell()
         });
       }
@@ -115,15 +115,15 @@ contract Task3 with Deployable {
           to: self.jettonAddressB,
           bounce: true,
           value: 0,
-          mode: SendIgnoreErrors,
+          mode: SendRemainingValue + SendIgnoreErrors,
           body: TokenTransfer{
             queryId: msg.queryId,
             amount: need,
             destination: wallet,
-            responseDestination: wallet,
+            responseDestination: null,
             customPayload: null,
             forwardTonAmount: 0,
-            forwardPayload: msg.forwardPayload
+            forwardPayload: beginCell().asSlice()
           }.toCell()
         });
       }
@@ -140,15 +140,15 @@ contract Task3 with Deployable {
           to: sender,
           bounce: true,
           value: 0,
-          mode: SendIgnoreErrors,
+          mode: SendRemainingValue + SendIgnoreErrors,
           body: TokenTransfer{
             queryId: msg.queryId,
             amount: msg.amount,
             destination: wallet,
-            responseDestination: wallet,
+            responseDestination: null,
             customPayload: null,
             forwardTonAmount: 0,
-            forwardPayload: msg.forwardPayload
+            forwardPayload: beginCell().asSlice()
           }.toCell()
         });
       }
@@ -161,15 +161,15 @@ contract Task3 with Deployable {
           to: self.jettonAddressA,
           bounce: true,
           value: 0,
-          mode: SendIgnoreErrors,
+          mode: SendRemainingValue + SendIgnoreErrors,
           body: TokenTransfer{
             queryId: msg.queryId,
             amount: need,
             destination: wallet,
-            responseDestination: wallet,
+            responseDestination: null,
             customPayload: null,
             forwardTonAmount: 0,
-            forwardPayload: msg.forwardPayload
+            forwardPayload: beginCell().asSlice()
           }.toCell()
         });
       }
