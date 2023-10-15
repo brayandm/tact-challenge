@@ -123,7 +123,7 @@ contract Task3 with Deployable {
             responseDestination: wallet,
             customPayload: null,
             forwardTonAmount: 0,
-            forwardPayload: beginCell().endCell()
+            forwardPayload: beginCell().asSlice()
           }.toCell()
         });
       }
@@ -169,7 +169,7 @@ contract Task3 with Deployable {
             responseDestination: wallet,
             customPayload: null,
             forwardTonAmount: 0,
-            forwardPayload: beginCell().endCell()
+            forwardPayload: beginCell().asSlice()
           }.toCell()
         });
       }
