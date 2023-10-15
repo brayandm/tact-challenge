@@ -18,21 +18,34 @@ message Subtract {
 }
 
 contract Task1 with Deployable {
-    counter: Int as int16;
+    //split number it two parts that together will be 32 bits
+    counter1: Int as int16;
+    counter2: Int as int16;
 
     init() {
-      self.counter = 0;
+      self.counter1 = 0;
+      self.counter2 = 0;
     }
 
     receive(msg: Add) {
-      self.counter = self.counter + msg.number;
+      let temp: Int = self.counter2 * 65536 + self.counter1;
+
+      temp = temp + msg.number;
+
+      self.counter1 = temp % 65536;
+      self.counter2 = temp / 65536;
     }
     
     receive(msg: Subtract) {
-      self.counter = self.counter - msg.number;
+      let temp: Int = self.counter2 * 65536 + self.counter1;
+
+      temp = temp - msg.number;
+
+      self.counter1 = temp % 65536;
+      self.counter2 = temp / 65536;
     }
 
     get fun counter(): Int {
-      return self.counter;
+      return self.counter2 * 65536 + self.counter1;
     }
 }
