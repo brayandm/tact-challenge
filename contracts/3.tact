@@ -82,20 +82,11 @@ contract Task3 with Deployable {
       return;
     }
 
-    if(sender == self.jettonAddressA)
-    {
-      sender = self.jettonAddressB;
-    }
-    else if(sender == self.jettonAddressB)
-    {
-      sender = self.jettonAddressA;
-    }
-
     if(sender == self.jettonAddressA) {
       let need: Int = 0;
 
       if(self.aAmount != 0) {
-        need = (self.bAmount * self.decimal / self.aAmount) * msg.amount / self.decimal;
+        need = (self.aAmount * self.decimal / self.bAmount) * msg.amount / self.decimal;
       } 
 
       if(self.aAmount == 0 || self.bAmount < need) {
@@ -141,7 +132,7 @@ contract Task3 with Deployable {
       let need: Int = 0;
 
       if(self.bAmount != 0) {
-        need = (self.aAmount * self.decimal / self.bAmount) * msg.amount / self.decimal;
+        need = (self.bAmount * self.decimal / self.aAmount) * msg.amount / self.decimal;
       } 
 
       if(self.bAmount == 0 || self.aAmount < need) {
@@ -186,9 +177,9 @@ contract Task3 with Deployable {
   } 
   
   get fun price(jetton: Address): Int { 
-    if(jetton == self.jettonAddressB) {
+    if(jetton == self.jettonAddressB && self.bAmount != 0) {
       return self.aAmount * self.decimal / self.bAmount;
-    } else if(jetton == self.jettonAddressA) {
+    } else if(jetton == self.jettonAddressA && self.aAmount != 0) {
       return self.bAmount * self.decimal / self.aAmount;
     } else {
       return 0;
