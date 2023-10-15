@@ -187,9 +187,9 @@ contract Task3 with Deployable {
   }
   
   get fun balance(jetton: Address): Int { 
-    if(jetton == self.jettonAddressB) {
+    if(jetton == self.jettonAddressA) {
       return self.aAmount;
-    } else if(jetton == self.jettonAddressA) {
+    } else if(jetton == self.jettonAddressB) {
       return self.bAmount;
     } else {
       return 0;
