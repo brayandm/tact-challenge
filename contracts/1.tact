@@ -20,7 +20,7 @@ message Subtract {
 contract Task1 with Deployable {
     //split number it two parts that together will be 32 bits
     counter1: Int as int16;
-    counter2: Int as int16;
+    counter2: Int as uint16;
 
     init() {
       self.counter1 = 0;
