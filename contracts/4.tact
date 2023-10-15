@@ -14,6 +14,7 @@ import "@stdlib/deploy";
    - If sender is not the owner (that came from OwnershipAssigned as prevOwner address) then throw "Invalid sender" 
    - If time has not passed then send message back to the sender with the comment "NFT is still locked" according to the TON's "message with text comment" standard 
    - Otherwise (all good) send the locked nft back to the owner with all the remaining TON balance
+   //- Otherwise (all good) send the locked nft back to the owner with all the remainings of the incoming TONs (New)
    Note that the order of checks is important
    (in case: "sender is not the owner" and "time has not passed" at the same time, "Invalid sender" error takes priority)
 
@@ -102,14 +103,14 @@ contract Task4 with Deployable {
     send(SendParameters{
           to: self.nftAddress!!,
           bounce: true,
-          value: myBalance() - context().value,
-          mode: SendIgnoreErrors,
+          value: 0,
+          mode: SendRemainingValue + SendIgnoreErrors,
           body: Transfer{
             queryId: msg.queryId,
             newOwner: self.nftOwner!!,
             responseDestination: self.nftOwner!!,
             customPayload: null,
-            forwardAmount: myBalance() - context().value,
+            forwardAmount: 0,
             forwardPayload: beginCell().asSlice()
           }.toCell()
     });
