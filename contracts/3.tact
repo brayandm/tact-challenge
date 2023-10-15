@@ -94,7 +94,7 @@ contract Task3 with Deployable {
           to: sender,
           bounce: true,
           value: 0,
-          mode: SendRemainingValue + SendIgnoreErrors,
+          mode: SendIgnoreErrors,
           body: TokenTransfer{
             queryId: msg.queryId,
             amount: msg.amount,
@@ -102,7 +102,7 @@ contract Task3 with Deployable {
             responseDestination: wallet,
             customPayload: null,
             forwardTonAmount: 0,
-            forwardPayload:beginCell().asSlice()
+            forwardPayload: msg.forwardPayload
           }.toCell()
         });
       }
@@ -115,7 +115,7 @@ contract Task3 with Deployable {
           to: self.jettonAddressB,
           bounce: true,
           value: 0,
-          mode: SendRemainingValue + SendIgnoreErrors,
+          mode: SendIgnoreErrors,
           body: TokenTransfer{
             queryId: msg.queryId,
             amount: need,
@@ -123,7 +123,7 @@ contract Task3 with Deployable {
             responseDestination: wallet,
             customPayload: null,
             forwardTonAmount: 0,
-            forwardPayload: beginCell().asSlice()
+            forwardPayload: msg.forwardPayload
           }.toCell()
         });
       }
@@ -140,7 +140,7 @@ contract Task3 with Deployable {
           to: sender,
           bounce: true,
           value: 0,
-          mode: SendRemainingValue + SendIgnoreErrors,
+          mode: SendIgnoreErrors,
           body: TokenTransfer{
             queryId: msg.queryId,
             amount: msg.amount,
@@ -148,7 +148,7 @@ contract Task3 with Deployable {
             responseDestination: wallet,
             customPayload: null,
             forwardTonAmount: 0,
-            forwardPayload: beginCell().asSlice()
+            forwardPayload: msg.forwardPayload
           }.toCell()
         });
       }
@@ -161,7 +161,7 @@ contract Task3 with Deployable {
           to: self.jettonAddressA,
           bounce: true,
           value: 0,
-          mode: SendRemainingValue + SendIgnoreErrors,
+          mode: SendIgnoreErrors,
           body: TokenTransfer{
             queryId: msg.queryId,
             amount: need,
@@ -169,7 +169,7 @@ contract Task3 with Deployable {
             responseDestination: wallet,
             customPayload: null,
             forwardTonAmount: 0,
-            forwardPayload: beginCell().asSlice()
+            forwardPayload: msg.forwardPayload
           }.toCell()
         });
       }
