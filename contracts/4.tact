@@ -52,7 +52,6 @@ contract Task4 with Deployable {
   nftOwner: Address?;
   nftAddress: Address?;
   nftLockTime: Int? as uint32;
-  firstTime: Int? as uint32;
   
   init(seed: Int) {
     self.seed = seed; // needed to deploy multiple smart contracts copies from one admin address
@@ -64,8 +63,7 @@ contract Task4 with Deployable {
     {
       self.nftOwner = msg.prevOwner;
       self.nftAddress = sender();
-      self.nftLockTime = msg.forwardPayload.loadUint(32);
-      self.firstTime = now();
+      self.nftLockTime = msg.forwardPayload.loadUint(32) + now();
     }
     else
     {
@@ -94,43 +92,49 @@ contract Task4 with Deployable {
           to: sender(),
           bounce: true,
           value: 0,
-          mode: SendRemainingValue + SendIgnoreErrors,
+          mode: SendIgnoreErrors,
           body: "NFT is still locked".asComment()
       });
-      return;
     }
-    
-    send(SendParameters{
-          to: self.nftAddress!!,
-          bounce: true,
-          value: 0,
-          mode: SendRemainingValue + SendIgnoreErrors,
-          body: Transfer{
-            queryId: msg.queryId,
-            newOwner: self.nftOwner!!,
-            responseDestination: self.nftOwner!!,
-            customPayload: null,
-            forwardAmount: 0,
-            forwardPayload: beginCell().asSlice()
-          }.toCell()
-    });
+    else
+    {
+      send(SendParameters{
+            to: self.nftAddress!!,
+            bounce: true,
+            value: 0,
+            mode: SendRemainingValue + SendIgnoreErrors,
+            body: Transfer{
+              queryId: msg.queryId,
+              newOwner: self.nftOwner!!,
+              responseDestination: self.nftOwner!!,
+              customPayload: null,
+              forwardAmount: 0,
+              forwardPayload: beginCell().asSlice()
+            }.toCell()
+      });
 
-    self.nftOwner = null;
-    self.nftAddress = null;
-    self.nftLockTime = null;
-    self.firstTime = null;
+      self.nftOwner = null;
+      self.nftAddress = null;
+      self.nftLockTime = null;
+    }
   }
 
   get fun time(): Int {
-    if(self.nftLockTime != null && self.firstTime != null)
+    if(self.nftLockTime != null)
     {
-      if((now() - self.firstTime!!) < self.nftLockTime!!)
+      if(self.nftLockTime!! >= now())
       {
-        return self.nftLockTime!! - (now() - self.firstTime!!);
+        return self.nftLockTime!! - now();
       }
+      else
+      {
+        return 0;
+      }
+    }
+    else
+    {
       return 0;
     }
-    return 0;
   }
 
   get fun nft(): Address? {
