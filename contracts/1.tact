@@ -28,24 +28,69 @@ contract Task1 with Deployable {
     }
 
     receive(msg: Add) {
-      let temp: Int = self.counter2 * 65536 + self.counter1;
+      let temp: Int = 0;
+      
+      if(self.counter2 < 0)
+      {
+        temp = self.counter2 * 65536 - self.counter1;
+      }
+      else
+      {
+        temp = self.counter2 * 65536 + self.counter1;
+      }
 
       temp = temp + msg.number;
 
-      self.counter1 = temp % 65536;
-      self.counter2 = temp / 65536;
+      if(temp < 0)
+      {
+        self.counter2 = -((-temp) / 65536);
+        self.counter1 = (-temp) % 65536;
+      }
+      else
+      {
+        self.counter2 = temp / 65536;
+        self.counter1 = temp % 65536;
+      }
     }
     
     receive(msg: Subtract) {
-      let temp: Int = self.counter2 * 65536 + self.counter1;
+      let temp: Int = 0;
+      
+      if(self.counter2 < 0)
+      {
+        temp = self.counter2 * 65536 - self.counter1;
+      }
+      else
+      {
+        temp = self.counter2 * 65536 + self.counter1;
+      }
 
       temp = temp - msg.number;
 
-      self.counter1 = temp % 65536;
-      self.counter2 = temp / 65536;
+      if(temp < 0)
+      {
+        self.counter2 = -((-temp) / 65536);
+        self.counter1 = (-temp) % 65536;
+      }
+      else
+      {
+        self.counter2 = temp / 65536;
+        self.counter1 = temp % 65536;
+      }
     }
 
     get fun counter(): Int {
-      return self.counter2 * 65536 + self.counter1;
+      let temp: Int = 0;
+      
+      if(self.counter2 < 0)
+      {
+        temp = self.counter2 * 65536 - self.counter1;
+      }
+      else
+      {
+        temp = self.counter2 * 65536 + self.counter1;
+      }
+
+      return temp;
     }
 }
