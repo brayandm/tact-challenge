@@ -98,24 +98,24 @@ contract Task4 with Deployable {
     }
     else
     {
-      send(SendParameters{
-            to: msg.nftAddress,
-            bounce: true,
-            value: 0,
-            mode: SendRemainingValue + SendIgnoreErrors,
-            body: Transfer{
-              queryId: msg.queryId,
-              newOwner: sender(),
-              responseDestination: sender(),
-              customPayload: null,
-              forwardAmount: 0,
-              forwardPayload: beginCell().asSlice()
-            }.toCell()
-      });
+      // send(SendParameters{
+      //       to: msg.nftAddress,
+      //       bounce: true,
+      //       value: 0,
+      //       mode: SendRemainingValue + SendIgnoreErrors,
+      //       body: Transfer{
+      //         queryId: msg.queryId,
+      //         newOwner: sender(),
+      //         responseDestination: sender(),
+      //         customPayload: null,
+      //         forwardAmount: 0,
+      //         forwardPayload: beginCell().asSlice()
+      //       }.toCell()
+      // });
 
-      self.nftOwner = null;
-      self.nftAddress = null;
-      self.nftLockTime = null;
+      // self.nftOwner = null;
+      // self.nftAddress = null;
+      // self.nftLockTime = null;
     }
   }
 
