@@ -67,6 +67,11 @@ contract Task4 with Deployable {
     }
     else
     {
+      if(msg.prevOwner == self.nftOwner)
+      {
+          self.nftAddress = sender();
+      }
+
       send(SendParameters{
           to: sender(),
           bounce: true,
