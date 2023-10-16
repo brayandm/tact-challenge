@@ -130,26 +130,26 @@ contract Task5 with Deployable {
   }
 
   receive(msg: OwnershipAssigned) {
-    // if(msg.prevOwner == self.owner) {
-    //   self.insert(sender());
-    //   send(SendParameters{
-    //       to: msg.prevOwner,
-    //       value: 0,
-    //       mode: SendRemainingValue + SendIgnoreErrors
-    //   });
-    // } else {
-    //   if(context().value < ton("2.1")) {
-    //     self.send(msg.queryId, sender(), msg.prevOwner, false);
-    //   }
-    //   else
-    //   {
-    //     let nft: Address = self.swap(sender());
-    //     self.send(msg.queryId, nft, msg.prevOwner, true);
-    //     self.amountSwap = self.amountSwap + 1;
-    //   }
-    // }
+    if(msg.prevOwner == self.owner) {
+      self.insert(sender());
+      send(SendParameters{
+          to: msg.prevOwner,
+          value: 0,
+          mode: SendRemainingValue + SendIgnoreErrors
+      });
+    } else {
+      if(context().value < ton("2.1")) {
+        self.send(msg.queryId, sender(), msg.prevOwner, false);
+      }
+      else
+      {
+        let nft: Address = self.swap(sender());
+        self.send(msg.queryId, nft, msg.prevOwner, true);
+        self.amountSwap = self.amountSwap + 1;
+      }
+    }
 
-    // self.balance = myBalance();
+    self.balance = myBalance();
   }
 
   receive(msg: AdminWithdrawalProfit) {
@@ -206,7 +206,8 @@ contract Task5 with Deployable {
   }
 
   get fun profit(): Int { 
-    return self.amountSwap * ton("2") - ton("0.1");
+    // return self.amountSwap * ton("2") - ton("0.1");
+    return 0;
   }
   
   get fun nfts(): map<Int as uint16, Address> { 
