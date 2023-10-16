@@ -51,7 +51,7 @@ contract Task4 with Deployable {
   seed: Int as uint128;
   nftOwner: Address?;
   nftAddress: Address?;
-  nftLockTime: Int? as int64;
+  nftLockTime: Int? as uint32;
   
   init(seed: Int) {
     self.seed = seed; // needed to deploy multiple smart contracts copies from one admin address
@@ -89,7 +89,7 @@ contract Task4 with Deployable {
 
     require(self.nftAddress == msg.nftAddress, "Invalid nft address");
 
-    if(self.nftLockTime!! - now() > 0) {
+    if(self.time() > 0) {
       send(SendParameters{
           to: sender(),
           bounce: true,
