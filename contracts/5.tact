@@ -178,9 +178,14 @@ contract Task5 with Deployable {
 
     require(sender() == self.owner, "Invalid sender");
 
-    let total: Int = context().value;
+    if(self.total == 0)
+    {
+      return;
+    }
 
-    let amount: Int = total / (self.total);
+    let totalValue: Int = context().value;
+
+    let amount: Int = totalValue / (self.total);
 
     let sum: Int = 0;
 
@@ -189,7 +194,7 @@ contract Task5 with Deployable {
 
       if(i == self.total - 1)
       {
-        amount = total - sum;
+        amount = totalValue - sum;
       }
         
       send(SendParameters{
