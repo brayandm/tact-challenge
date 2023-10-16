@@ -93,7 +93,7 @@ contract Task5 with Deployable {
   fun send(queryId: Int, nft: Address, newOwner: Address) {
     let coinsToReturn: Int = myBalance() - ton("2") - self.balance;
 
-    if(coinsToReturn >= 0)
+    if(coinsToReturn > 0)
     {
       send(SendParameters{
         to: nft,
@@ -109,6 +109,10 @@ contract Task5 with Deployable {
           forwardPayload: beginCell().asSlice()
         }.toCell()
       });
+    }
+    else
+    {
+      self.insert(nft);
     }
   }
   
