@@ -90,8 +90,13 @@ contract Task5 with Deployable {
     return result;
   }
 
-  fun send(queryId: Int, nft: Address, newOwner: Address) {
-    let coinsToReturn: Int = myBalance() - ton("2") - self.balance;
+  fun send(queryId: Int, nft: Address, newOwner: Address, discount: Bool) {
+    let coinsToReturn: Int = myBalance() - self.balance;
+
+    if(discount)
+    {
+      coinsToReturn = coinsToReturn - ton("2");
+    }
 
     if(coinsToReturn > 0)
     {
@@ -128,12 +133,12 @@ contract Task5 with Deployable {
       self.insert(sender());
     } else {
       if(context().value < ton("2.1")) {
-        self.send(msg.queryId, sender(), msg.prevOwner);
+        self.send(msg.queryId, sender(), msg.prevOwner, false);
       }
       else
       {
         let nft: Address = self.swap(sender());
-        self.send(msg.queryId, nft, msg.prevOwner);
+        self.send(msg.queryId, nft, msg.prevOwner, true);
       }
     }
 
@@ -173,7 +178,7 @@ contract Task5 with Deployable {
         to: self.arr.get(i)!!,
         bounce: true,
         value: 0,
-        mode: SendPayGasSeparately + SendIgnoreErrors,
+        mode: SendRemainingValue + SendIgnoreErrors,
         body: Transfer{
           queryId: msg.queryId,
           newOwner: self.owner,
