@@ -18,126 +18,21 @@ message Subtract {
 }
 
 contract Task1 with Deployable {
-    //split number it two parts that together will be 32 bits
-    counter1: Int as int16;
-    counter2: Int as int16;
+    counter: Int as int32;
 
     init() {
-      self.counter1 = 0;
-      self.counter2 = 0;
+      self.counter = 0;
     }
 
     receive(msg: Add) {
-      let temp: Int = 0;
-      let c1: Int = self.counter1;
-      let c2: Int = self.counter2;
-      
-      if(c2 < 0)
-      {
-        temp = c2 * 32768 - c1;
-      }
-      else if(c2 > 0)
-      {
-        temp = c2 * 32768 + c1;
-      }
-      else {
-        temp = c1;
-      }
-
-      temp = temp + msg.number;
-
-      if(temp < 0)
-      {
-        if(temp < -32768)
-        {
-          self.counter2 = -((-temp) / 32768);
-          self.counter1 = (-temp) % 32768;
-        }
-        else
-        {
-          self.counter2 = 0;
-          self.counter1 = temp;
-        }
-      }
-      else
-      {
-        if(temp > 32767)
-        {
-          self.counter2 = temp / 32768;
-          self.counter1 = temp % 32768;
-        }
-        else
-        {
-          self.counter2 = 0;
-          self.counter1 = temp;
-        }
-      }
+      self.counter = self.counter + msg.number;
     }
     
     receive(msg: Subtract) {
-      let temp: Int = 0;
-      let c1: Int = self.counter1;
-      let c2: Int = self.counter2;
-      
-      if(c2 < 0)
-      {
-        temp = c2 * 32768 - c1;
-      }
-      else if(c2 > 0)
-      {
-        temp = c2 * 32768 + c1;
-      }
-      else {
-        temp = c1;
-      }
-
-      temp = temp - msg.number;
-
-      if(temp < 0)
-      {
-        if(temp < -32768)
-        {
-          self.counter2 = -((-temp) / 32768);
-          self.counter1 = (-temp) % 32768;
-        }
-        else
-        {
-          self.counter2 = 0;
-          self.counter1 = temp;
-        }
-      }
-      else
-      {
-        if(temp > 32767)
-        {
-          self.counter2 = temp / 32768;
-          self.counter1 = temp % 32768;
-        }
-        else
-        {
-          self.counter2 = 0;
-          self.counter1 = temp;
-        }
-      }
+      self.counter = self.counter - msg.number;
     }
 
     get fun counter(): Int {
-      let temp: Int = 0;
-      let c1: Int = self.counter1;
-      let c2: Int = self.counter2;
-      
-      if(c2 < 0)
-      {
-        temp = c2 * 32768 - c1;
-      }
-      else if(c2 > 0)
-      {
-        temp = c2 * 32768 + c1;
-      }
-      else {
-        temp = c1;
-      }
-
-      return temp;
+      return self.counter;
     }
 }
