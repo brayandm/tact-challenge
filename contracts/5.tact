@@ -155,7 +155,7 @@ contract Task5 with Deployable {
   receive(msg: AdminWithdrawalProfit) {
     require(sender() == self.owner, "Insufficient privelegies");
 
-    let coinsToReturn: Int = myBalance() - ton("0.1");
+    let coinsToReturn: Int = self.amountSwap * ton("2") - ton("0.1");
 
     if(coinsToReturn > 0)
     {
@@ -171,6 +171,7 @@ contract Task5 with Deployable {
     }
 
     self.balance = myBalance();
+    self.amountSwap = 0;
   }
 
   receive(msg: AdminWithdrawalAllNFTs) {
@@ -220,11 +221,10 @@ contract Task5 with Deployable {
     self.arr = emptyMap();
     self.total = 0;
     self.balance = myBalance();
-    self.amountSwap = 0;
   }
 
   get fun profit(): Int { 
-    return myBalance() - ton("0.1");
+    return self.amountSwap * ton("2") - ton("0.1");
   }
   
   get fun nfts(): map<Int as uint16, Address> { 
