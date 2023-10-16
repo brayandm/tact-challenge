@@ -178,9 +178,9 @@ contract Task3 with Deployable {
     require(jetton == self.jettonAddressA || jetton == self.jettonAddressB, "Wrong jetton address");
 
     if(jetton == self.jettonAddressB && self.bAmount != 0) {
-      return self.aAmount * self.decimal / self.bAmount;
+      return self.aAmount * 1000000000 / self.bAmount;
     } else if(jetton == self.jettonAddressA && self.aAmount != 0) {
-      return self.bAmount * self.decimal / self.aAmount;
+      return self.bAmount * 1000000000 / self.aAmount;
     } else {
       return 0;
     }
