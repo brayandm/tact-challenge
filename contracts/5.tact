@@ -130,47 +130,47 @@ contract Task5 with Deployable {
   }
 
   receive(msg: OwnershipAssigned) {
-    if(msg.prevOwner == self.owner) {
-      self.insert(sender());
-      send(SendParameters{
-          to: msg.prevOwner,
-          value: 0,
-          mode: SendRemainingValue + SendIgnoreErrors
-      });
-    } else {
-      if(context().value < ton("2.1")) {
-        self.send(msg.queryId, sender(), msg.prevOwner, false);
-      }
-      else
-      {
-        let nft: Address = self.swap(sender());
-        self.send(msg.queryId, nft, msg.prevOwner, true);
-        self.amountSwap = self.amountSwap + 1;
-      }
-    }
-
-    self.balance = myBalance();
-  }
-
-  receive(msg: AdminWithdrawalProfit) {
-    // require(sender() == self.owner, "Insufficient privelegies");
-
-    // let coinsToReturn: Int = myBalance() - ton("0.1");
-
-    // if(coinsToReturn >= 0)
-    // {
+    // if(msg.prevOwner == self.owner) {
+    //   self.insert(sender());
     //   send(SendParameters{
-    //     to: sender(),
-    //     bounce: true,
-    //     value: self.amountSwap * ton("2") - ton("0.1"),
-    //     mode: SendIgnoreErrors,
-    //     body: AdminFetchProfit{
-    //       queryId: msg.queryId
-    //     }.toCell()
+    //       to: msg.prevOwner,
+    //       value: 0,
+    //       mode: SendRemainingValue + SendIgnoreErrors
     //   });
+    // } else {
+    //   if(context().value < ton("2.1")) {
+    //     self.send(msg.queryId, sender(), msg.prevOwner, false);
+    //   }
+    //   else
+    //   {
+    //     let nft: Address = self.swap(sender());
+    //     self.send(msg.queryId, nft, msg.prevOwner, true);
+    //     self.amountSwap = self.amountSwap + 1;
+    //   }
     // }
 
     // self.balance = myBalance();
+  }
+
+  receive(msg: AdminWithdrawalProfit) {
+    require(sender() == self.owner, "Insufficient privelegies");
+
+    let coinsToReturn: Int = myBalance() - ton("0.1");
+
+    if(coinsToReturn >= 0)
+    {
+      send(SendParameters{
+        to: sender(),
+        bounce: true,
+        value: self.amountSwap * ton("2") - ton("0.1"),
+        mode: SendIgnoreErrors,
+        body: AdminFetchProfit{
+          queryId: msg.queryId
+        }.toCell()
+      });
+    }
+
+    self.balance = myBalance();
   }
 
   receive(msg: AdminWithdrawalAllNFTs) {
