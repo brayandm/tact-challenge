@@ -117,7 +117,7 @@ contract Task5 with Deployable {
     }
     else
     {
-      self.insert(nft);
+      // self.insert(nft);
     }
   }
   
