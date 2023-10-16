@@ -82,12 +82,13 @@ contract Task5 with Deployable {
     if(index == self.total) {
       return nft;
     }
+    return nft;
 
-    let result: Address = self.arr.get(index)!!;
+    // let result: Address = self.arr.get(index)!!;
 
-    self.arr.set(index, nft);
+    // self.arr.set(index, nft);
 
-    return result;
+    // return result;
   }
 
   fun send(queryId: Int, nft: Address, newOwner: Address, discount: Bool) {
