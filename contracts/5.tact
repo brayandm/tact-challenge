@@ -92,7 +92,7 @@ contract Task5 with Deployable {
   }
 
   fun send(queryId: Int, nft: Address, newOwner: Address, discount: Bool) {
-    let coinsToReturn: Int = myBalance() - self.balance;
+    let coinsToReturn: Int = myBalance() - self.amountSwap * ton("2");
 
     if(discount)
     {
