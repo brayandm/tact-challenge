@@ -33,7 +33,9 @@ contract Task2 with Deployable {
           value: 0,
           mode: SendRemainingValue
       });
+      return;
     }
+    throw(132);
   }
 
   receive(msg: Slice) {
