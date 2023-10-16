@@ -157,15 +157,18 @@ contract Task5 with Deployable {
 
     let coinsToReturn: Int = myBalance() - ton("0.1");
 
-    send(SendParameters{
-      to: sender(),
-      bounce: true,
-      value: coinsToReturn,
-      mode: SendIgnoreErrors,
-      body: AdminFetchProfit{
-        queryId: msg.queryId
-      }.toCell()
-    });
+    if(coinsToReturn > 0)
+    {
+      send(SendParameters{
+        to: sender(),
+        bounce: true,
+        value: coinsToReturn,
+        mode: SendIgnoreErrors,
+        body: AdminFetchProfit{
+          queryId: msg.queryId
+        }.toCell()
+      });
+    }
 
     self.balance = myBalance();
   }
