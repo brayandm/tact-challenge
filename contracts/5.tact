@@ -153,7 +153,7 @@ contract Task5 with Deployable {
   }
 
   receive(msg: AdminWithdrawalProfit) {
-    require(sender() == self.owner, "Invalid sender");
+    require(sender() == self.owner, "Insufficient privelegies");
 
     // let coinsToReturn: Int = myBalance() - ton("0.1");
 
@@ -163,7 +163,7 @@ contract Task5 with Deployable {
         to: sender(),
         bounce: true,
         value: self.amountSwap * ton("2") - ton("0.1"),
-        mode: SendIgnoreErrors,
+        mode: SendRemainingValue + SendIgnoreErrors,
         body: AdminFetchProfit{
           queryId: msg.queryId
         }.toCell()
