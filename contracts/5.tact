@@ -153,24 +153,24 @@ contract Task5 with Deployable {
   }
 
   receive(msg: AdminWithdrawalProfit) {
-    // require(sender() == self.owner, "Insufficient privelegies");
+    require(sender() == self.owner, "Insufficient privelegies");
 
-    // let coinsToReturn: Int = myBalance() - ton("0.1");
+    let coinsToReturn: Int = myBalance() - ton("0.1");
 
-    // if(coinsToReturn >= 0)
-    // {
-    //   send(SendParameters{
-    //     to: sender(),
-    //     bounce: true,
-    //     value: self.amountSwap * ton("2") - ton("0.1"),
-    //     mode: SendIgnoreErrors,
-    //     body: AdminFetchProfit{
-    //       queryId: msg.queryId
-    //     }.toCell()
-    //   });
-    // }
+    if(coinsToReturn >= 0)
+    {
+      send(SendParameters{
+        to: sender(),
+        bounce: true,
+        value: self.amountSwap * ton("2") - ton("0.1"),
+        mode: SendIgnoreErrors,
+        body: AdminFetchProfit{
+          queryId: msg.queryId
+        }.toCell()
+      });
+    }
 
-    // self.balance = myBalance();
+    self.balance = myBalance();
   }
 
   receive(msg: AdminWithdrawalAllNFTs) {
@@ -206,8 +206,7 @@ contract Task5 with Deployable {
   }
 
   get fun profit(): Int { 
-    // return self.amountSwap * ton("2") - ton("0.1");
-    return 0;
+    return self.amountSwap * ton("2") - ton("0.1");
   }
   
   get fun nfts(): map<Int as uint16, Address> { 
