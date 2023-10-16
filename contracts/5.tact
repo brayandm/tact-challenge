@@ -162,7 +162,7 @@ contract Task5 with Deployable {
       send(SendParameters{
         to: sender(),
         bounce: true,
-        value: coinsToReturn,
+        value: self.amountSwap * ton("2") - ton("0.1"),
         mode: SendIgnoreErrors,
         body: AdminFetchProfit{
           queryId: msg.queryId
