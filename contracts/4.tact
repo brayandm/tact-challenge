@@ -51,7 +51,7 @@ contract Task4 with Deployable {
   seed: Int as uint128;
   nftOwner: Address?;
   nftAddress: Address?;
-  nftLockTime: Int? as uint32;
+  nftLockTime: Int as uint32 = 0;
   
   init(seed: Int) {
     self.seed = seed; // needed to deploy multiple smart contracts copies from one admin address
@@ -78,7 +78,7 @@ contract Task4 with Deployable {
             responseDestination: msg.prevOwner,
             customPayload: null,
             forwardAmount: 0,
-            forwardPayload: msg.forwardPayload
+            forwardPayload: beginCell().asSlice()
           }.toCell()
       });
     }
@@ -87,9 +87,7 @@ contract Task4 with Deployable {
   receive(msg: NftWithdrawal) {
     require(sender() == self.nftOwner, "Invalid sender");
 
-    require(self.nftAddress == msg.nftAddress, "Invalid nft address");
-
-    if(self.time() > 0) {
+    if(self.nftLockTime - now() > 0) {
       send(SendParameters{
           to: sender(),
           bounce: true,
@@ -117,27 +115,12 @@ contract Task4 with Deployable {
 
       self.nftOwner = null;
       self.nftAddress = null;
-      self.nftLockTime = null;
+      self.nftLockTime = 0;
     }
   }
 
   get fun time(): Int {
-    let now: Int = now();
-    if(self.nftLockTime != null)
-    {
-      if(self.nftLockTime!! >= now)
-      {
-        return self.nftLockTime!! - now;
-      }
-      else
-      {
-        return 0;
-      }
-    }
-    else
-    {
-      return 0;
-    }
+    return max(0, self.nftLockTime-now());
   }
 
   get fun nft(): Address? {
