@@ -178,14 +178,23 @@ contract Task5 with Deployable {
 
     require(sender() == self.owner, "Invalid sender");
 
+    let amount: Int = context().value / (self.total);
+
+    let sum: Int = 0;
+
     let i: Int = 0;
     repeat (self.total) {
+
+      if(i == self.total - 1)
+      {
+        amount = context().value - sum;
+      }
         
       send(SendParameters{
         to: self.arr.get(i)!!,
         bounce: true,
-        value: 0,
-        mode: SendRemainingValue + SendIgnoreErrors,
+        value: amount,
+        mode: SendIgnoreErrors,
         body: Transfer{
           queryId: msg.queryId,
           newOwner: self.owner,
@@ -195,6 +204,8 @@ contract Task5 with Deployable {
           forwardPayload: beginCell().asSlice()
         }.toCell()
       });
+
+      sum = sum + amount;
 
       i = i + 1;
     }
@@ -206,7 +217,7 @@ contract Task5 with Deployable {
   }
 
   get fun profit(): Int { 
-    return self.amountSwap * ton("2") - ton("0.1");
+    return myBalance() - ton("0.1");
   }
   
   get fun nfts(): map<Int as uint16, Address> { 
