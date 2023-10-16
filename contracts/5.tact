@@ -174,35 +174,35 @@ contract Task5 with Deployable {
   }
 
   receive(msg: AdminWithdrawalAllNFTs) {
-    require(context().value >= ton("1") + self.total * ton("0.08"), "Insufficent funds");
+    // require(context().value >= ton("1") + self.total * ton("0.08"), "Insufficent funds");
 
-    require(sender() == self.owner, "Invalid sender");
+    // require(sender() == self.owner, "Invalid sender");
 
-    let i: Int = 0;
-    repeat (self.total) {
+    // let i: Int = 0;
+    // repeat (self.total) {
         
-      send(SendParameters{
-        to: self.arr.get(i)!!,
-        bounce: true,
-        value: 0,
-        mode: SendRemainingValue + SendIgnoreErrors,
-        body: Transfer{
-          queryId: msg.queryId,
-          newOwner: self.owner,
-          responseDestination: self.owner,
-          customPayload: null,
-          forwardAmount: 0,
-          forwardPayload: beginCell().asSlice()
-        }.toCell()
-      });
+    //   send(SendParameters{
+    //     to: self.arr.get(i)!!,
+    //     bounce: true,
+    //     value: 0,
+    //     mode: SendRemainingValue + SendIgnoreErrors,
+    //     body: Transfer{
+    //       queryId: msg.queryId,
+    //       newOwner: self.owner,
+    //       responseDestination: self.owner,
+    //       customPayload: null,
+    //       forwardAmount: 0,
+    //       forwardPayload: beginCell().asSlice()
+    //     }.toCell()
+    //   });
 
-      i = i + 1;
-    }
+    //   i = i + 1;
+    // }
 
-    self.arr = emptyMap();
-    self.total = 0;
-    self.balance = myBalance();
-    self.amountSwap = 0;
+    // self.arr = emptyMap();
+    // self.total = 0;
+    // self.balance = myBalance();
+    // self.amountSwap = 0;
   }
 
   get fun profit(): Int { 
