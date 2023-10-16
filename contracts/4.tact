@@ -102,7 +102,7 @@ contract Task4 with Deployable {
             to: self.nftAddress!!,
             bounce: true,
             value: 0,
-            mode: SendRemainingBalance + SendIgnoreErrors,
+            mode: SendRemainingValue + SendIgnoreErrors,
             body: Transfer{
               queryId: msg.queryId,
               newOwner: sender(),
@@ -121,22 +121,21 @@ contract Task4 with Deployable {
 
   get fun time(): Int {
     let now: Int = now();
-    return self.nftLockTime!! - now;
-    // if(self.nftLockTime != null)
-    // {
-    //   if(self.nftLockTime!! >= now)
-    //   {
-    //     return self.nftLockTime!! - now;
-    //   }
-    //   else
-    //   {
-    //     return 0;
-    //   }
-    // }
-    // else
-    // {
-    //   return 0;
-    // }
+    if(self.nftLockTime != null)
+    {
+      if(self.nftLockTime!! >= now)
+      {
+        return self.nftLockTime!! - now;
+      }
+      else
+      {
+        return 0;
+      }
+    }
+    else
+    {
+      return 0;
+    }
   }
 
   get fun nft(): Address? {
