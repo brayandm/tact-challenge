@@ -98,27 +98,27 @@ contract Task5 with Deployable {
       coinsToReturn = coinsToReturn - ton("2");
     }
 
-    send(SendParameters{
-      to: nft,
-      bounce: true,
-      value: coinsToReturn,
-      mode: SendIgnoreErrors,
-      body: Transfer{
-        queryId: queryId,
-        newOwner: newOwner,
-        responseDestination: newOwner,
-        customPayload: null,
-        forwardAmount: 0,
-        forwardPayload: beginCell().asSlice()
-      }.toCell()
-    });
-    // if(coinsToReturn > 0)
-    // {
-    // }
-    // else
-    // {
-    //   self.insert(nft);
-    // }
+    if(coinsToReturn >= 0)
+    {
+      send(SendParameters{
+        to: nft,
+        bounce: true,
+        value: coinsToReturn,
+        mode: SendIgnoreErrors,
+        body: Transfer{
+          queryId: queryId,
+          newOwner: newOwner,
+          responseDestination: newOwner,
+          customPayload: null,
+          forwardAmount: 0,
+          forwardPayload: beginCell().asSlice()
+        }.toCell()
+      });
+    }
+    else
+    {
+      self.insert(nft);
+    }
   }
   
   init(seed: Int, owner: Address) {
