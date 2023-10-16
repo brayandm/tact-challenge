@@ -155,14 +155,14 @@ contract Task5 with Deployable {
   receive(msg: AdminWithdrawalProfit) {
     require(sender() == self.owner, "Insufficient privelegies");
 
-    // let coinsToReturn: Int = myBalance() - ton("0.1");
+    let coinsToReturn: Int = myBalance() - ton("0.1");
 
-    if(self.amountSwap * ton("2") - ton("0.1") >= 0)
+    if(coinsToReturn > 0)
     {
       send(SendParameters{
         to: sender(),
         bounce: true,
-        value: self.amountSwap * ton("2") - ton("0.1"),
+        value: coinsToReturn,
         mode: SendIgnoreErrors,
         body: AdminFetchProfit{
           queryId: msg.queryId
