@@ -102,7 +102,7 @@ contract Task3 with Deployable {
             responseDestination: wallet,
             customPayload: null,
             forwardTonAmount: 0,
-            forwardPayload: msg.forwardPayload
+            forwardPayload: beginCell().asSlice()
           }.toCell()
         });
       }
@@ -123,7 +123,7 @@ contract Task3 with Deployable {
             responseDestination: wallet,
             customPayload: null,
             forwardTonAmount: 0,
-            forwardPayload: msg.forwardPayload
+            forwardPayload: beginCell().asSlice()
           }.toCell()
         });
       }
@@ -148,7 +148,7 @@ contract Task3 with Deployable {
             responseDestination: wallet,
             customPayload: null,
             forwardTonAmount: 0,
-            forwardPayload: msg.forwardPayload
+            forwardPayload: beginCell().asSlice()
           }.toCell()
         });
       }
@@ -169,7 +169,7 @@ contract Task3 with Deployable {
             responseDestination: wallet,
             customPayload: null,
             forwardTonAmount: 0,
-            forwardPayload: msg.forwardPayload
+            forwardPayload: beginCell().asSlice()
           }.toCell()
         });
       }
@@ -190,7 +190,7 @@ contract Task3 with Deployable {
   
   get fun balance(jetton: Address): Int { 
     require(jetton == self.jettonAddressA || jetton == self.jettonAddressB, "Wrong jetton address");
-    
+
     if(jetton == self.jettonAddressA) {
       return self.aAmount;
     } else if(jetton == self.jettonAddressB) {
