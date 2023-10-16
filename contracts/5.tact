@@ -153,7 +153,7 @@ contract Task5 with Deployable {
   }
 
   receive(msg: AdminWithdrawalProfit) {
-    require(sender() == self.owner, "Insufficient privelegies");
+    require(sender() == self.owner, "Invalid sender");
 
     // let coinsToReturn: Int = myBalance() - ton("0.1");
 
