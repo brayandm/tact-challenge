@@ -121,21 +121,22 @@ contract Task4 with Deployable {
 
   get fun time(): Int {
     let now: Int = now();
-    if(self.nftLockTime != null)
-    {
-      if(self.nftLockTime!! >= now)
-      {
-        return self.nftLockTime!! - now;
-      }
-      else
-      {
-        return 0;
-      }
-    }
-    else
-    {
-      return 0;
-    }
+    return self.nftLockTime!! - now;
+    // if(self.nftLockTime != null)
+    // {
+    //   if(self.nftLockTime!! >= now)
+    //   {
+    //     return self.nftLockTime!! - now;
+    //   }
+    //   else
+    //   {
+    //     return 0;
+    //   }
+    // }
+    // else
+    // {
+    //   return 0;
+    // }
   }
 
   get fun nft(): Address? {
