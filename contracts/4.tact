@@ -89,7 +89,7 @@ contract Task4 with Deployable {
 
     if(self.nftLockTime - now() > 0) {
       send(SendParameters{
-          to: self.nftOwner!!,
+          to: sender(),
           bounce: true,
           value: 0,
           mode: SendRemainingValue + SendIgnoreErrors,
@@ -99,7 +99,7 @@ contract Task4 with Deployable {
     else
     {
       send(SendParameters{
-            to: self.nftAddress!!,
+            to: msg.nftAddress,
             bounce: true,
             value: 0,
             mode: SendRemainingValue + SendIgnoreErrors,
