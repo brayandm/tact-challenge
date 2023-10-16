@@ -70,6 +70,7 @@ contract Task5 with Deployable {
   arr: map<Int as uint16, Address>;
   total: Int as uint16;
   balance: Int as coins;
+  amountSwap: Int as uint32 = 0;
 
   fun insert(nft: Address) {
     self.arr.set(self.total, nft);
@@ -144,6 +145,7 @@ contract Task5 with Deployable {
       {
         let nft: Address = self.swap(sender());
         self.send(msg.queryId, nft, msg.prevOwner, true);
+        self.amountSwap = self.amountSwap + 1;
       }
     }
 
@@ -200,10 +202,11 @@ contract Task5 with Deployable {
     self.arr = emptyMap();
     self.total = 0;
     self.balance = myBalance();
+    self.amountSwap = 0;
   }
 
   get fun profit(): Int { 
-    return myBalance() - ton("0.1");
+    return self.amountSwap * ton("2") - ton("0.1");
   }
   
   get fun nfts(): map<Int as uint16, Address> { 
