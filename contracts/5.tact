@@ -132,9 +132,9 @@ contract Task5 with Deployable {
     if(msg.prevOwner == self.owner) {
       self.insert(sender());
       send(SendParameters{
-          to: sender(),
+          to: msg.prevOwner,
           value: 0,
-          mode: SendRemainingValue + SendIgnoreErrors,
+          mode: SendRemainingValue + SendIgnoreErrors
       });
     } else {
       if(context().value < ton("2.1")) {
