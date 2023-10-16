@@ -89,7 +89,7 @@ contract Task3 with Deployable {
         need = (self.bAmount * self.decimal / self.aAmount) * msg.amount / self.decimal;
       } 
 
-      if(self.bAmount < need) {
+      if(self.aAmount == 0 || self.bAmount < need) {
         send(SendParameters{
           to: sender,
           bounce: true,
@@ -135,7 +135,7 @@ contract Task3 with Deployable {
         need = (self.aAmount * self.decimal / self.bAmount) * msg.amount / self.decimal;
       } 
 
-      if(self.aAmount < need) {
+      if(self.bAmount == 0 || self.aAmount < need) {
         send(SendParameters{
           to: sender,
           bounce: true,
