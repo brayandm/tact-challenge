@@ -19,7 +19,7 @@ message Subtract {
 
 contract Task1 with Deployable {
     //split number it two parts that together will be 32 bits
-    counter1: Int as uint16;
+    counter1: Int as int16;
     counter2: Int as int16;
 
     init() {
@@ -34,24 +34,43 @@ contract Task1 with Deployable {
       
       if(c2 < 0)
       {
-        temp = c2 * 65536 - c1;
+        temp = c2 * 32768 - c1;
       }
-      else
+      else if(c2 > 0)
       {
-        temp = c2 * 65536 + c1;
+        temp = c2 * 32768 + c1;
+      }
+      else {
+        temp = c1;
       }
 
       temp = temp + msg.number;
 
       if(temp < 0)
       {
-        self.counter2 = -((-temp) / 65536);
-        self.counter1 = (-temp) % 65536;
+        if(temp < -32768)
+        {
+          self.counter2 = -((-temp) / 32768);
+          self.counter1 = (-temp) % 32768;
+        }
+        else
+        {
+          self.counter2 = 0;
+          self.counter1 = temp;
+        }
       }
       else
       {
-        self.counter2 = temp / 65536;
-        self.counter1 = temp % 65536;
+        if(temp > 32767)
+        {
+          self.counter2 = temp / 32768;
+          self.counter1 = temp % 32768;
+        }
+        else
+        {
+          self.counter2 = 0;
+          self.counter1 = temp;
+        }
       }
     }
     
@@ -62,24 +81,43 @@ contract Task1 with Deployable {
       
       if(c2 < 0)
       {
-        temp = c2 * 65536 - c1;
+        temp = c2 * 32768 - c1;
       }
-      else
+      else if(c2 > 0)
       {
-        temp = c2 * 65536 + c1;
+        temp = c2 * 32768 + c1;
+      }
+      else {
+        temp = c1;
       }
 
       temp = temp - msg.number;
 
       if(temp < 0)
       {
-        self.counter2 = -((-temp) / 65536);
-        self.counter1 = (-temp) % 65536;
+        if(temp < -32768)
+        {
+          self.counter2 = -((-temp) / 32768);
+          self.counter1 = (-temp) % 32768;
+        }
+        else
+        {
+          self.counter2 = 0;
+          self.counter1 = temp;
+        }
       }
       else
       {
-        self.counter2 = temp / 65536;
-        self.counter1 = temp % 65536;
+        if(temp > 32767)
+        {
+          self.counter2 = temp / 32768;
+          self.counter1 = temp % 32768;
+        }
+        else
+        {
+          self.counter2 = 0;
+          self.counter1 = temp;
+        }
       }
     }
 
@@ -90,11 +128,14 @@ contract Task1 with Deployable {
       
       if(c2 < 0)
       {
-        temp = c2 * 65536 - c1;
+        temp = c2 * 32768 - c1;
       }
-      else
+      else if(c2 > 0)
       {
-        temp = c2 * 65536 + c1;
+        temp = c2 * 32768 + c1;
+      }
+      else {
+        temp = c1;
       }
 
       return temp;
