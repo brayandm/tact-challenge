@@ -155,7 +155,7 @@ contract Task5 with Deployable {
 
     let coinsToReturn: Int = myBalance() - ton("0.1");
 
-    if(coinsToReturn > 0)
+    if(coinsToReturn >= 0)
     {
       send(SendParameters{
         to: sender(),
