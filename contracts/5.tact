@@ -98,7 +98,7 @@ contract Task5 with Deployable {
       coinsToReturn = coinsToReturn - ton("2");
     }
 
-    if(coinsToReturn >= 0)
+    if(coinsToReturn > 0)
     {
       send(SendParameters{
         to: nft,
@@ -131,11 +131,6 @@ contract Task5 with Deployable {
   receive(msg: OwnershipAssigned) {
     if(msg.prevOwner == self.owner) {
       self.insert(sender());
-      send(SendParameters{
-          to: msg.prevOwner,
-          value: 0,
-          mode: SendRemainingValue + SendIgnoreErrors
-      });
     } else {
       if(context().value < ton("2.1")) {
         self.send(msg.queryId, sender(), msg.prevOwner, false);
@@ -155,7 +150,7 @@ contract Task5 with Deployable {
 
     let coinsToReturn: Int = myBalance() - ton("0.1");
 
-    if(coinsToReturn >= 0)
+    if(coinsToReturn > 0)
     {
       send(SendParameters{
         to: sender(),
