@@ -70,7 +70,6 @@ contract Task5 with Deployable {
   arr: map<Int as uint16, Address>;
   total: Int as uint16;
   balance: Int as coins;
-  amountSwap: Int as uint32 = 0;
 
   fun insert(nft: Address) {
     self.arr.set(self.total, nft);
@@ -99,27 +98,27 @@ contract Task5 with Deployable {
       coinsToReturn = coinsToReturn - ton("2");
     }
 
-    send(SendParameters{
-      to: nft,
-      bounce: true,
-      value: coinsToReturn,
-      mode: SendIgnoreErrors,
-      body: Transfer{
-        queryId: queryId,
-        newOwner: newOwner,
-        responseDestination: newOwner,
-        customPayload: null,
-        forwardAmount: 0,
-        forwardPayload: beginCell().asSlice()
-      }.toCell()
-    });
-    // if(coinsToReturn >= 0)
-    // {
-    // }
-    // else
-    // {
-    //   // self.insert(nft);
-    // }
+    if(coinsToReturn > 0)
+    {
+      send(SendParameters{
+        to: nft,
+        bounce: true,
+        value: coinsToReturn,
+        mode: SendIgnoreErrors,
+        body: Transfer{
+          queryId: queryId,
+          newOwner: newOwner,
+          responseDestination: newOwner,
+          customPayload: null,
+          forwardAmount: 0,
+          forwardPayload: beginCell().asSlice()
+        }.toCell()
+      });
+    }
+    else
+    {
+      self.insert(nft);
+    }
   }
   
   init(seed: Int, owner: Address) {
@@ -145,7 +144,6 @@ contract Task5 with Deployable {
       {
         let nft: Address = self.swap(sender());
         self.send(msg.queryId, nft, msg.prevOwner, true);
-        self.amountSwap = self.amountSwap + 1;
       }
     }
 
@@ -155,7 +153,7 @@ contract Task5 with Deployable {
   receive(msg: AdminWithdrawalProfit) {
     require(sender() == self.owner, "Insufficient privelegies");
 
-    let coinsToReturn: Int = self.amountSwap * ton("2") - ton("0.1");
+    let coinsToReturn: Int = myBalance() - ton("0.1");
 
     if(coinsToReturn > 0)
     {
@@ -171,7 +169,6 @@ contract Task5 with Deployable {
     }
 
     self.balance = myBalance();
-    self.amountSwap = 0;
   }
 
   receive(msg: AdminWithdrawalAllNFTs) {
@@ -224,7 +221,7 @@ contract Task5 with Deployable {
   }
 
   get fun profit(): Int { 
-    return self.amountSwap * ton("2") - ton("0.1");
+    return myBalance() - ton("0.1");
   }
   
   get fun nfts(): map<Int as uint16, Address> { 
