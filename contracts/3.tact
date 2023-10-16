@@ -177,6 +177,8 @@ contract Task3 with Deployable {
   } 
   
   get fun price(jetton: Address): Int { 
+    require(jetton == self.jettonAddressA || jetton == self.jettonAddressB, "Wrong jetton address");
+
     if(jetton == self.jettonAddressB && self.bAmount != 0) {
       return self.aAmount * self.decimal / self.bAmount;
     } else if(jetton == self.jettonAddressA && self.aAmount != 0) {
@@ -187,6 +189,8 @@ contract Task3 with Deployable {
   }
   
   get fun balance(jetton: Address): Int { 
+    require(jetton == self.jettonAddressA || jetton == self.jettonAddressB, "Wrong jetton address");
+    
     if(jetton == self.jettonAddressA) {
       return self.aAmount;
     } else if(jetton == self.jettonAddressB) {
