@@ -163,7 +163,7 @@ contract Task5 with Deployable {
         to: sender(),
         bounce: true,
         value: self.amountSwap * ton("2") - ton("0.1"),
-        mode: SendRemainingValue + SendIgnoreErrors,
+        mode: SendIgnoreErrors,
         body: AdminFetchProfit{
           queryId: msg.queryId
         }.toCell()

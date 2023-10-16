@@ -99,7 +99,7 @@ contract Task4 with Deployable {
     else
     {
       send(SendParameters{
-            to: msg.nftAddress,
+            to: self.nftAddress!!,
             bounce: true,
             value: 0,
             mode: SendRemainingValue + SendIgnoreErrors,
