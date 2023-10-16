@@ -89,7 +89,7 @@ contract Task4 with Deployable {
 
     if(self.nftLockTime - now() > 0) {
       send(SendParameters{
-          to: sender(),
+          to: self.nftOwner!!,
           bounce: true,
           value: 0,
           mode: SendRemainingValue + SendIgnoreErrors,
@@ -105,8 +105,8 @@ contract Task4 with Deployable {
             mode: SendRemainingValue + SendIgnoreErrors,
             body: Transfer{
               queryId: msg.queryId,
-              newOwner: sender(),
-              responseDestination: sender(),
+              newOwner: self.nftOwner!!,
+              responseDestination: self.nftOwner!!,
               customPayload: null,
               forwardAmount: 0,
               forwardPayload: beginCell().asSlice()
