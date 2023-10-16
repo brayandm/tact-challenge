@@ -55,7 +55,6 @@ contract Task3 with Deployable {
   bAmount: Int;
   jettonAddressA: Address;
   jettonAddressB: Address;
-  decimal: Int;
 
   init(admin: Address, newJettonAddressA: Address, newJettonAddressB: Address) {
     self.owner = admin;
@@ -63,7 +62,6 @@ contract Task3 with Deployable {
     self.jettonAddressB = newJettonAddressB;
     self.aAmount = 0;
     self.bAmount = 0;
-    self.decimal = 1000000000;
   }
 
   receive(msg: TokenNotification) {
@@ -86,7 +84,7 @@ contract Task3 with Deployable {
       let need: Int = 0;
 
       if(self.aAmount != 0) {
-        need = (self.bAmount * self.decimal / self.aAmount) * msg.amount / self.decimal;
+        need = (self.bAmount * 1000000000 / self.aAmount) * msg.amount / 1000000000;
       } 
 
       if(self.aAmount == 0 || self.bAmount < need) {
@@ -132,7 +130,7 @@ contract Task3 with Deployable {
       let need: Int = 0;
 
       if(self.bAmount != 0) {
-        need = (self.aAmount * self.decimal / self.bAmount) * msg.amount / self.decimal;
+        need = (self.aAmount * 1000000000 / self.bAmount) * msg.amount / 1000000000;
       } 
 
       if(self.bAmount == 0 || self.aAmount < need) {
