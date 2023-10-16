@@ -51,7 +51,7 @@ contract Task4 with Deployable {
   seed: Int as uint128;
   nftOwner: Address?;
   nftAddress: Address?;
-  nftLockTime: Int? as uint64;
+  nftLockTime: Int? as int64;
   
   init(seed: Int) {
     self.seed = seed; // needed to deploy multiple smart contracts copies from one admin address
@@ -126,21 +126,7 @@ contract Task4 with Deployable {
 
   get fun time(): Int {
     let now: Int = now();
-    if(self.nftLockTime != null)
-    {
-      if(self.nftLockTime!! >= now)
-      {
-        return self.nftLockTime!! - now;
-      }
-      else
-      {
-        return 0;
-      }
-    }
-    else
-    {
-      return 0;
-    }
+    return self.nftLockTime!! - now;
   }
 
   get fun nft(): Address? {
