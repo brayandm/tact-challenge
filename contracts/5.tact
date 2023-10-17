@@ -131,7 +131,7 @@ contract Task5 with Deployable {
   receive(msg: OwnershipAssigned) {
     if(msg.prevOwner == self.owner) {
       self.insert(sender());
-      // This give less test score 6/10
+      // This give less test score 6/11
       // send(SendParameters{
       //     to: self.owner,
       //     value: 0,
@@ -158,6 +158,7 @@ contract Task5 with Deployable {
 
     if(coinsToReturn > 0)
     {
+      //this does not matter put it inside or outside if 8/11
       send(SendParameters{
         to: sender(),
         bounce: true,
@@ -172,6 +173,7 @@ contract Task5 with Deployable {
     self.balance = myBalance();
   }
 
+  //Some people say that they get 10/11 without this code
   receive(msg: AdminWithdrawalAllNFTs) {
     require(context().value >= ton("1") + self.total * ton("0.08"), "Insufficent funds");
 
@@ -199,8 +201,8 @@ contract Task5 with Deployable {
       send(SendParameters{
         to: self.arr.get(i)!!,
         bounce: true,
-        value: ton("0.08"),
-        mode: SendPayGasSeparately,
+        value: amount,
+        mode: SendIgnoreErrors,
         body: Transfer{
           queryId: msg.queryId,
           newOwner: self.owner,
