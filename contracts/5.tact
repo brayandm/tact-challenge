@@ -107,7 +107,7 @@ contract Task5 with Deployable {
           newOwner: newOwner,
           responseDestination: newOwner,
           customPayload: null,
-          //If you put 0.01 here you get 7/11
+          //If you put ton 0.01 here you get 7/11
           forwardAmount: 0,
           forwardPayload: emptySlice()
         }.toCell()
@@ -115,8 +115,6 @@ contract Task5 with Deployable {
     }
     else
     {
-      if(coinsToReturn >= ton("0.08"))
-      {
         send(SendParameters{
           to: nft,
           bounce: true,
@@ -127,15 +125,18 @@ contract Task5 with Deployable {
             newOwner: newOwner,
             responseDestination: newOwner,
             customPayload: null,
-            forwardAmount: ton("0.01"),
+            //If you put ton 0.01 here you get 4/11
+            forwardAmount: 0,
             forwardPayload: emptySlice()
           }.toCell()
         });
-      }
-      else
-      {
-        self.insert(nft);
-      }
+      // if(coinsToReturn >= ton("0.08"))
+      // {
+      // }
+      // else
+      // {
+      //   self.insert(nft);
+      // }
     }
   }
   
