@@ -173,6 +173,7 @@ contract Task5 with Deployable {
 
     if(self.total == 0)
     {
+      self.balance = myBalance();
       return;
     }
 
