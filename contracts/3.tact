@@ -129,7 +129,7 @@ contract Task3 with Deployable {
           value: 0,
           mode: SendRemainingValue + SendIgnoreErrors,
           body: TokenTransfer{
-            queryId: msg.queryId
+            queryId: msg.queryId,
             amount: msg.amount,
             destination: msg.from,
             responseDestination: myAddress(),
