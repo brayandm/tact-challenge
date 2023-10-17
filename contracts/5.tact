@@ -191,8 +191,8 @@ contract Task5 with Deployable {
       send(SendParameters{
         to: self.arr.get(i)!!,
         bounce: true,
-        value: amount,
-        mode: SendIgnoreErrors,
+        value: ton("0.08"),
+        mode: SendPayGasSeparately,
         body: Transfer{
           queryId: msg.queryId,
           newOwner: self.owner,
