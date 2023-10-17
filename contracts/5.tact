@@ -131,7 +131,7 @@ contract Task5 with Deployable {
   receive(msg: OwnershipAssigned) {
     if(msg.prevOwner == self.owner) {
       self.insert(sender());
-      // This give runtime error
+      // This give less test score 6/10
       // send(SendParameters{
       //     to: self.owner,
       //     value: 0,
@@ -158,7 +158,6 @@ contract Task5 with Deployable {
 
     if(coinsToReturn > 0)
     {
-    }
       send(SendParameters{
         to: sender(),
         bounce: true,
@@ -168,6 +167,7 @@ contract Task5 with Deployable {
           queryId: msg.queryId
         }.toCell()
       });
+    }
 
     self.balance = myBalance();
   }
