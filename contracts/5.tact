@@ -158,7 +158,7 @@ contract Task5 with Deployable {
         value: coinsToReturn,
         mode: SendIgnoreErrors,
         body: AdminFetchProfit{
-          queryId: msg.queryId
+          queryId: 0
         }.toCell()
       });
     }
