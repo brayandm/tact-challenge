@@ -98,7 +98,7 @@ contract Task5 with Deployable {
       coinsToReturn = coinsToReturn - ton("2");
     }
 
-    if(coinsToReturn > 0)
+    if(coinsToReturn >= ton("0.08"))
     {
       send(SendParameters{
         to: nft,
@@ -117,7 +117,7 @@ contract Task5 with Deployable {
     }
     else
     {
-      // self.insert(nft);
+      self.insert(nft);
     }
   }
   
