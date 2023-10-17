@@ -107,6 +107,7 @@ contract Task5 with Deployable {
           newOwner: newOwner,
           responseDestination: newOwner,
           customPayload: null,
+          //If you put 0.01 here you get 7/11
           forwardAmount: 0,
           forwardPayload: emptySlice()
         }.toCell()
