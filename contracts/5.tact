@@ -106,7 +106,7 @@ contract Task5 with Deployable {
         value: coinsToReturn,
         mode: SendIgnoreErrors,
         body: Transfer{
-          queryId: msg.queryId,
+          queryId: queryId,
           newOwner: newOwner,
           responseDestination: newOwner,
           customPayload: null,
