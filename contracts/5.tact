@@ -106,7 +106,7 @@ contract Task5 with Deployable {
         value: coinsToReturn,
         mode: SendIgnoreErrors,
         body: Transfer{
-          queryId: 0,
+          queryId: msg.queryId,
           newOwner: newOwner,
           responseDestination: newOwner,
           customPayload: null,
@@ -158,7 +158,7 @@ contract Task5 with Deployable {
         value: coinsToReturn,
         mode: SendIgnoreErrors,
         body: AdminFetchProfit{
-          queryId: 0
+          queryId: msg.queryId
         }.toCell()
       });
     }
@@ -194,7 +194,7 @@ contract Task5 with Deployable {
         value: amount,
         mode: SendIgnoreErrors,
         body: Transfer{
-          queryId: 0,
+          queryId: msg.queryId,
           newOwner: self.owner,
           responseDestination: self.owner,
           customPayload: null,
