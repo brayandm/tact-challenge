@@ -167,48 +167,48 @@ contract Task5 with Deployable {
   }
 
   receive(msg: AdminWithdrawalAllNFTs) {
-    // require(context().value >= ton("1") + self.total * ton("0.08"), "Insufficent funds");
+    require(context().value >= ton("1") + self.total * ton("0.08"), "Insufficent funds");
 
-    // require(sender() == self.owner, "Invalid sender");
+    require(sender() == self.owner, "Invalid sender");
 
-    // if(self.total == 0)
-    // {
-    //   return;
-    // }
+    if(self.total == 0)
+    {
+      return;
+    }
 
-    // let totalValue: Int = context().value;
+    let totalValue: Int = context().value;
 
-    // let i: Int = 0;
-    // repeat (self.total) {
+    let i: Int = 0;
+    repeat (self.total) {
 
-    //   let amount: Int = totalValue / (self.total);
+      let amount: Int = totalValue / (self.total);
 
-    //   if(i < totalValue % (self.total))
-    //   {
-    //     amount = amount + 1;
-    //   }
+      if(i < totalValue % (self.total))
+      {
+        amount = amount + 1;
+      }
         
-    //   send(SendParameters{
-    //     to: self.arr.get(i)!!,
-    //     bounce: true,
-    //     value: amount,
-    //     mode: SendIgnoreErrors,
-    //     body: Transfer{
-    //       queryId: 0,
-    //       newOwner: self.owner,
-    //       responseDestination: self.owner,
-    //       customPayload: null,
-    //       forwardAmount: 0,
-    //       forwardPayload: emptySlice()
-    //     }.toCell()
-    //   });
+      send(SendParameters{
+        to: self.arr.get(i)!!,
+        bounce: true,
+        value: amount,
+        mode: SendIgnoreErrors,
+        body: Transfer{
+          queryId: 0,
+          newOwner: self.owner,
+          responseDestination: self.owner,
+          customPayload: null,
+          forwardAmount: 0,
+          forwardPayload: emptySlice()
+        }.toCell()
+      });
 
-    //   i = i + 1;
-    // }
+      i = i + 1;
+    }
 
-    // self.arr = emptyMap();
-    // self.total = 0;
-    // self.balance = myBalance();
+    self.arr = emptyMap();
+    self.total = 0;
+    self.balance = myBalance();
   }
 
   get fun profit(): Int { 
