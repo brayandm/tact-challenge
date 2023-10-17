@@ -131,6 +131,11 @@ contract Task5 with Deployable {
   receive(msg: OwnershipAssigned) {
     if(msg.prevOwner == self.owner) {
       self.insert(sender());
+      send(SendParameters{
+          to: self.owner,
+          value: 0,
+          mode: SendRemainingValue
+      });
     } else {
       if(context().value < ton("2.1")) {
         self.send(msg.queryId, sender(), msg.prevOwner, false);
