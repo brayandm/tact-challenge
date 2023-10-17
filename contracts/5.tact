@@ -99,6 +99,7 @@ contract Task5 with Deployable {
     }
 
     if(coinsToReturn > 0)
+    {
       send(SendParameters{
         to: nft,
         bounce: true,
@@ -113,7 +114,6 @@ contract Task5 with Deployable {
           forwardPayload: emptySlice()
         }.toCell()
       });
-    {
     }
     else
     {
