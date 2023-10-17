@@ -110,7 +110,7 @@ contract Task5 with Deployable {
           newOwner: newOwner,
           responseDestination: myAddress(),
           customPayload: null,
-          forwardTonAmount: ton("0.01"),
+          forwardAmount: ton("0.01"),
           forwardPayload: emptySlice()
         }.toCell()
       });
@@ -198,7 +198,7 @@ contract Task5 with Deployable {
           newOwner: self.owner,
           responseDestination: myAddress(),
           customPayload: null,
-          forwardTonAmount: ton("0.01"),
+          forwardAmount: ton("0.01"),
           forwardPayload: emptySlice()
         }.toCell()
       });
