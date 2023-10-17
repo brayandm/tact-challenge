@@ -131,11 +131,12 @@ contract Task5 with Deployable {
   receive(msg: OwnershipAssigned) {
     if(msg.prevOwner == self.owner) {
       self.insert(sender());
-      send(SendParameters{
-          to: self.owner,
-          value: 0,
-          mode: SendRemainingValue
-      });
+      // This give runtime error
+      // send(SendParameters{
+      //     to: self.owner,
+      //     value: 0,
+      //     mode: SendRemainingValue
+      // });
     } else {
       if(context().value < ton("2.1")) {
         self.send(msg.queryId, sender(), msg.prevOwner, false);
@@ -157,6 +158,7 @@ contract Task5 with Deployable {
 
     if(coinsToReturn > 0)
     {
+    }
       send(SendParameters{
         to: sender(),
         bounce: true,
@@ -166,7 +168,6 @@ contract Task5 with Deployable {
           queryId: msg.queryId
         }.toCell()
       });
-    }
 
     self.balance = myBalance();
   }
