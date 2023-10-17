@@ -96,10 +96,7 @@ contract Task5 with Deployable {
     if(discount)
     {
       coinsToReturn = coinsToReturn - ton("2");
-    }
 
-    if(coinsToReturn >= ton("0.08"))
-    {
       send(SendParameters{
         to: nft,
         bounce: true,
@@ -110,14 +107,34 @@ contract Task5 with Deployable {
           newOwner: newOwner,
           responseDestination: newOwner,
           customPayload: null,
-          forwardAmount: 0,
+          forwardAmount: ton("0.01"),
           forwardPayload: emptySlice()
         }.toCell()
       });
     }
     else
     {
-      self.insert(nft);
+      if(coinsToReturn >= ton("0.08"))
+      {
+        send(SendParameters{
+          to: nft,
+          bounce: true,
+          value: coinsToReturn,
+          mode: SendIgnoreErrors,
+          body: Transfer{
+            queryId: queryId,
+            newOwner: newOwner,
+            responseDestination: newOwner,
+            customPayload: null,
+            forwardAmount: 0,
+            forwardPayload: emptySlice()
+          }.toCell()
+        });
+      }
+      else
+      {
+        self.insert(nft);
+      }
     }
   }
   
