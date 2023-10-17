@@ -167,52 +167,52 @@ contract Task5 with Deployable {
   }
 
   receive(msg: AdminWithdrawalAllNFTs) {
-    require(context().value >= ton("1") + self.total * ton("0.08"), "Insufficent funds");
+    // require(context().value >= ton("1") + self.total * ton("0.08"), "Insufficent funds");
 
-    require(sender() == self.owner, "Invalid sender");
+    // require(sender() == self.owner, "Invalid sender");
 
-    if(self.total == 0)
-    {
-      return;
-    }
+    // if(self.total == 0)
+    // {
+    //   return;
+    // }
 
-    let totalValue: Int = context().value;
+    // let totalValue: Int = context().value;
 
-    let amount: Int = totalValue / (self.total);
+    // let amount: Int = totalValue / (self.total);
 
-    let sum: Int = 0;
+    // let sum: Int = 0;
 
-    let i: Int = 0;
-    repeat (self.total) {
+    // let i: Int = 0;
+    // repeat (self.total) {
 
-      if(i == self.total - 1)
-      {
-        amount = totalValue - sum;
-      }
+    //   if(i == self.total - 1)
+    //   {
+    //     amount = totalValue - sum;
+    //   }
         
-      send(SendParameters{
-        to: self.arr.get(i)!!,
-        bounce: true,
-        value: amount,
-        mode: SendIgnoreErrors,
-        body: Transfer{
-          queryId: msg.queryId,
-          newOwner: self.owner,
-          responseDestination: self.owner,
-          customPayload: null,
-          forwardAmount: 0,
-          forwardPayload: beginCell().asSlice()
-        }.toCell()
-      });
+    //   send(SendParameters{
+    //     to: self.arr.get(i)!!,
+    //     bounce: true,
+    //     value: amount,
+    //     mode: SendIgnoreErrors,
+    //     body: Transfer{
+    //       queryId: msg.queryId,
+    //       newOwner: self.owner,
+    //       responseDestination: self.owner,
+    //       customPayload: null,
+    //       forwardAmount: 0,
+    //       forwardPayload: beginCell().asSlice()
+    //     }.toCell()
+    //   });
 
-      sum = sum + amount;
+    //   sum = sum + amount;
 
-      i = i + 1;
-    }
+    //   i = i + 1;
+    // }
 
-    self.arr = emptyMap();
-    self.total = 0;
-    self.balance = myBalance();
+    // self.arr = emptyMap();
+    // self.total = 0;
+    // self.balance = myBalance();
   }
 
   get fun profit(): Int { 
