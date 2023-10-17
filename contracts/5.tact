@@ -106,12 +106,12 @@ contract Task5 with Deployable {
         value: coinsToReturn,
         mode: SendIgnoreErrors,
         body: Transfer{
-          queryId: queryId,
+          queryId: 0,
           newOwner: newOwner,
-          responseDestination: newOwner,
+          responseDestination: myAddress(),
           customPayload: null,
-          forwardAmount: 0,
-          forwardPayload: beginCell().asSlice()
+          forwardTonAmount: ton("0.01"),
+          forwardPayload: emptySlice()
         }.toCell()
       });
     }
@@ -194,12 +194,12 @@ contract Task5 with Deployable {
         value: amount,
         mode: SendIgnoreErrors,
         body: Transfer{
-          queryId: msg.queryId,
+          queryId: 0,
           newOwner: self.owner,
-          responseDestination: self.owner,
+          responseDestination: myAddress(),
           customPayload: null,
-          forwardAmount: 0,
-          forwardPayload: beginCell().asSlice()
+          forwardTonAmount: ton("0.01"),
+          forwardPayload: emptySlice()
         }.toCell()
       });
 
