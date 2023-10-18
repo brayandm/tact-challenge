@@ -177,19 +177,19 @@ contract Task5 with Deployable {
 
     let coinsToReturn: Int = myBalance() - ton("0.1");
 
-    if(coinsToReturn > 0)
-    {
+    send(SendParameters{
+      to: sender(),
+      bounce: true,
+      value: coinsToReturn,
+      mode: SendIgnoreErrors,
+      body: AdminFetchProfit{
+        queryId: msg.queryId
+      }.toCell()
+    });
+    // if(coinsToReturn > 0)
+    // {
       //this does not matter put it inside or outside if 8/11
-      send(SendParameters{
-        to: sender(),
-        bounce: true,
-        value: coinsToReturn,
-        mode: SendIgnoreErrors,
-        body: AdminFetchProfit{
-          queryId: msg.queryId
-        }.toCell()
-      });
-    }
+    // }
 
     self.balance = myBalance();
   }
@@ -200,12 +200,12 @@ contract Task5 with Deployable {
 
     require(sender() == self.owner, "Invalid sender");
 
-    if(self.total == 0)
-    {
+    // if(self.total == 0)
+    // {
       //this give error
       // self.balance = myBalance();
-      return;
-    }
+      // return;
+    // }
 
     let totalValue: Int = context().value;
 
