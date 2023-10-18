@@ -122,6 +122,7 @@ contract Task5 with Deployable {
     else//If I comment this else I get 4/11
     { 
       //If I delete this if and else I still got 8/11
+      //Not sure if I can check like this, or maybe is it better to check other stuff
       if(context().value >= context().readForwardFee())
       {
         send(SendParameters{
@@ -238,9 +239,9 @@ contract Task5 with Deployable {
         bounce: true,
         //Putting 0.08 tons only and keeping 1 TON for the contract give still 9/11
         //Some people say that they get 10/11 sending 0.08 tons here
-        value: ton("0.08"),
+        value: amount,
         // Putting SendPayGasSeparately here give still 9/11
-        mode: SendPayGasSeparately,
+        mode: SendIgnoreErrors,
         body: Transfer{
           queryId: msg.queryId,
           newOwner: self.owner,
