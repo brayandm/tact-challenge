@@ -130,6 +130,8 @@ contract Task5 with Deployable {
             forwardPayload: emptySlice()
           }.toCell()
         });
+      
+      //If I delete this if and else I still got 8/11
       // if(coinsToReturn >= ton("0.08"))
       // {
       // }
