@@ -172,7 +172,7 @@ contract Task5 with Deployable {
       send(SendParameters{
         to: self.arr.get(i)!!,
         bounce: true,
-        value: ton("0.06"),
+        value: ton("0.05"),
         mode: SendIgnoreErrors,
         body: Transfer{
           queryId: msg.queryId,
