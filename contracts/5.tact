@@ -241,7 +241,7 @@ contract Task5 with Deployable {
         bounce: true,
         //Putting 0.08 tons only and keeping 1 TON for the contract give still 9/11
         //Some people say that they get 10/11 sending 0.08 tons here
-        value: ton("0.08"),
+        value: amount,
         // Putting SendPayGasSeparately here give still 9/11
         mode: SendIgnoreErrors,
         body: Transfer{
