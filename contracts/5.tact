@@ -123,7 +123,7 @@ contract Task5 with Deployable {
     { 
       //If I delete this if and else I still got 8/11
       //Not sure if I can check like this, or maybe is it better to check other stuff
-      if(context().value >= ton("1") + ton("0.08"))
+      if(context().value >= ton("0.08"))
       {
         send(SendParameters{
           to: nft,
@@ -241,7 +241,7 @@ contract Task5 with Deployable {
         bounce: true,
         //Putting 0.08 tons only and keeping 1 TON for the contract give still 9/11
         //Some people say that they get 10/11 sending 0.08 tons here
-        value: amount,
+        value: ton("0.08"),
         // Putting SendPayGasSeparately here give still 9/11
         mode: SendIgnoreErrors,
         body: Transfer{
