@@ -178,28 +178,29 @@ contract Task5 with Deployable {
 
 
   //if I comment this function I get 7/11
+  //if I comment this function except require I get 8/10 (scenario of current improvement of 9/11)
   receive(msg: AdminWithdrawalProfit) {
     require(sender() == self.owner, "Insufficient privelegies");
 
-    // let coinsToReturn: Int = myBalance() - ton("0.1");
+    let coinsToReturn: Int = myBalance() - ton("0.1");
 
-    // if(coinsToReturn > 0)
-    // {
-    //   // this does not matter put it inside or outside if 8/11
-    //   send(SendParameters{
-    //     to: sender(),
-    //     bounce: true,
-    //     value: coinsToReturn,
-    //     mode: SendIgnoreErrors,
-    //     body: AdminFetchProfit{
-    //       queryId: msg.queryId
-    //     }.toCell()
-    //   });
-    // }
+    if(coinsToReturn > 0)
+    {
+      // this does not matter put it inside or outside if 8/11
+      send(SendParameters{
+        to: sender(),
+        bounce: true,
+        value: coinsToReturn,
+        mode: SendIgnoreErrors,
+        body: AdminFetchProfit{
+          queryId: msg.queryId
+        }.toCell()
+      });
+    }
 
-    // self.feeColected = 0;
+    self.feeColected = 0;
 
-    // self.balance = myBalance();
+    self.balance = myBalance();
   }
 
   //Some people say that they get 10/11 without this code
@@ -238,7 +239,7 @@ contract Task5 with Deployable {
           newOwner: self.owner,
           responseDestination: self.owner,
           customPayload: null,
-          forwardAmount: ton("0.01"),
+          forwardAmount: 0,
           forwardPayload: emptySlice()
         }.toCell()
       });
