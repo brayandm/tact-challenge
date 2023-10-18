@@ -121,7 +121,7 @@ contract Task5 with Deployable {
     else//If I comment this else I get 4/11
     { 
       //If I delete this if and else I still got 8/11
-      if(coinsToReturn >= ton("0.08"))
+      if(coinsToReturn > 0)
       {
         send(SendParameters{
           to: nft,
