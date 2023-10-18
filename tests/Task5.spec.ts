@@ -22,12 +22,12 @@ describe('Task5', () => {
             }
         );
 
-        console.log(
-            await task5.send(wallets[0].getSender(), { value: BigInt(1000000) }, {
-                $$type: 'AdminWithdrawalProfit',
-                queryId: BigInt(0),
-            } as AdminWithdrawalProfit)
-        );
+        // console.log(
+        //     await task5.send(wallets[0].getSender(), { value: BigInt(1000000) }, {
+        //         $$type: 'AdminWithdrawalProfit',
+        //         queryId: BigInt(0),
+        //     } as AdminWithdrawalProfit)
+        // );
         console.log(await task5.getProfit());
         // expect(deployResult.transactions).toHaveTransaction({
         //     from: deployer.address,

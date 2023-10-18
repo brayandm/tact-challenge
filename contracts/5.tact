@@ -253,7 +253,7 @@ contract Task5 with Deployable {
 
   // I get 8/10 Without this function
   get fun profit(): Int { 
-    return myBalance() - ton("0.1");
+    return max(myBalance() - ton("0.1"), 0);
     // return ton("14.7");
   }
   
