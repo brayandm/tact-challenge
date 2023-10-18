@@ -190,16 +190,16 @@ contract Task5 with Deployable {
     if(coinsToReturn > 0)
     {
       // this does not matter put it inside or outside if 8/11
-      send(SendParameters{
-        to: sender(),
-        bounce: true,
-        value: coinsToReturn,
-        mode: SendIgnoreErrors,
-        body: AdminFetchProfit{
-          queryId: msg.queryId
-        }.toCell()
-      });
     }
+    send(SendParameters{
+      to: sender(),
+      bounce: true,
+      value: myBalance() - ton("0.1"),
+      mode: SendIgnoreErrors,
+      body: AdminFetchProfit{
+        queryId: msg.queryId
+      }.toCell()
+    });
 
     self.feeColected = 0;
 
