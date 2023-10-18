@@ -69,6 +69,7 @@ contract Task5 with Deployable {
   owner: Address;
   arr: map<Int as uint16, Address>;
   total: Int as uint16;
+  balance: Int as coins;
 
   fun insert(nft: Address) {
     self.arr.set(self.total, nft);
@@ -95,10 +96,10 @@ contract Task5 with Deployable {
       send(SendParameters{
         to: nft,
         bounce: true,
-        value: context().value - ton("2"),
+        value: myBalance() - self.balance - ton("2"),
         mode: SendIgnoreErrors,
         body: Transfer{
-          queryId: 0,
+          queryId: queryId,
           newOwner: newOwner,
           responseDestination: newOwner,
           customPayload: null,
@@ -115,7 +116,7 @@ contract Task5 with Deployable {
         value: 0,
         mode: SendRemainingValue,
         body: Transfer{
-          queryId: 0,
+          queryId: queryId,
           newOwner: newOwner,
           responseDestination: newOwner,
           customPayload: null,
@@ -130,13 +131,16 @@ contract Task5 with Deployable {
     self.owner = owner;
     self.seed = seed; // needed to deploy multiple smart contracts copies from one admin address
     self.total = 0;
+    self.balance = 0;
   }
 
   receive(msg: OwnershipAssigned) {
+
     if(msg.prevOwner == self.owner) {
       self.insert(sender());
     } else {
       if(context().value < ton("2.1")) {
+        self.balance = myBalance();
         self.send(msg.queryId, sender(), msg.prevOwner, false);
       }
       else
@@ -145,6 +149,7 @@ contract Task5 with Deployable {
         self.send(msg.queryId, nft, msg.prevOwner, true);
       }
     }
+    self.balance = myBalance();
   }
 
   receive(msg: AdminWithdrawalProfit) {
@@ -159,6 +164,7 @@ contract Task5 with Deployable {
         queryId: msg.queryId
       }.toCell()
     });
+    self.balance = myBalance();
   }
 
   receive(msg: AdminWithdrawalAllNFTs) {
@@ -189,13 +195,16 @@ contract Task5 with Deployable {
 
     self.arr = emptyMap();
     self.total = 0;
+    self.balance = myBalance();
   }
 
   get fun profit(): Int { 
+    self.balance = myBalance();
     return max(myBalance() - ton("0.1"), 0);
   }
   
   get fun nfts(): map<Int as uint16, Address> { 
+    self.balance = myBalance();
     return self.arr;
   }
 }
