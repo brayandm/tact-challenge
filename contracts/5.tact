@@ -177,78 +177,79 @@ contract Task5 with Deployable {
 
   //if I comment this function I get 7/11
   receive(msg: AdminWithdrawalProfit) {
-    require(sender() == self.owner, "Insufficient privelegies");
+    // require(sender() == self.owner, "Insufficient privelegies");
 
-    let coinsToReturn: Int = myBalance() - ton("0.1");
+    // let coinsToReturn: Int = myBalance() - ton("0.1");
 
-    send(SendParameters{
-      to: sender(),
-      bounce: true,
-      value: coinsToReturn,
-      mode: SendIgnoreErrors,
-      body: AdminFetchProfit{
-        queryId: msg.queryId
-      }.toCell()
-    });
-    // if(coinsToReturn > 0)
-    // {
-      //this does not matter put it inside or outside if 8/11
-    // }
+    // send(SendParameters{
+    //   to: sender(),
+    //   bounce: true,
+    //   value: coinsToReturn,
+    //   mode: SendIgnoreErrors,
+    //   body: AdminFetchProfit{
+    //     queryId: msg.queryId
+    //   }.toCell()
+    // });
+    // // if(coinsToReturn > 0)
+    // // {
+    //   //this does not matter put it inside or outside if 8/11
+    // // }
 
-    self.feeColected = 0;
+    // self.feeColected = 0;
 
-    self.balance = myBalance();
+    // self.balance = myBalance();
   }
 
   //Some people say that they get 10/11 without this code
   receive(msg: AdminWithdrawalAllNFTs) {
-    require(context().value >= ton("1") + self.total * ton("0.08"), "Insufficent funds");
+    // require(context().value >= ton("1") + self.total * ton("0.08"), "Insufficent funds");
 
-    require(sender() == self.owner, "Invalid sender");
+    // require(sender() == self.owner, "Invalid sender");
 
-    //we comment this
-    // if(self.total == 0)
-    // {
-      //this give error
-      // self.balance = myBalance();
-      // return;
+    // //we comment this
+    // // if(self.total == 0)
+    // // {
+    //   //this give error
+    //   // self.balance = myBalance();
+    //   // return;
+    // // }
+
+    // let totalValue: Int = context().value;
+
+    // let i: Int = 0;
+    // repeat (self.total) {
+
+    //   let amount: Int = totalValue / (self.total);
+
+    //   if(i < totalValue % (self.total))
+    //   {
+    //     amount = amount + 1;
+    //   }
+        
+    //   send(SendParameters{
+    //     to: self.arr.get(i)!!,
+    //     bounce: true,
+    //     value: amount,
+    //     mode: SendIgnoreErrors,
+    //     body: Transfer{
+    //       queryId: msg.queryId,
+    //       newOwner: self.owner,
+    //       responseDestination: self.owner,
+    //       customPayload: null,
+    //       forwardAmount: ton("0.01"),
+    //       forwardPayload: emptySlice()
+    //     }.toCell()
+    //   });
+
+    //   i = i + 1;
     // }
 
-    let totalValue: Int = context().value;
-
-    let i: Int = 0;
-    repeat (self.total) {
-
-      let amount: Int = totalValue / (self.total);
-
-      if(i < totalValue % (self.total))
-      {
-        amount = amount + 1;
-      }
-        
-      send(SendParameters{
-        to: self.arr.get(i)!!,
-        bounce: true,
-        value: amount,
-        mode: SendIgnoreErrors,
-        body: Transfer{
-          queryId: msg.queryId,
-          newOwner: self.owner,
-          responseDestination: self.owner,
-          customPayload: null,
-          forwardAmount: ton("0.01"),
-          forwardPayload: emptySlice()
-        }.toCell()
-      });
-
-      i = i + 1;
-    }
-
-    self.arr = emptyMap();
-    self.total = 0;
-    self.balance = myBalance();
+    // self.arr = emptyMap();
+    // self.total = 0;
+    // self.balance = myBalance();
   }
 
+  // I get 8/10 Without this function
   get fun profit(): Int { 
     // return myBalance() - ton("0.1");
     return ton("14.3");
