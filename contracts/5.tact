@@ -205,8 +205,9 @@ contract Task5 with Deployable {
 
   //Some people say that they get 10/11 without this code
   receive(msg: AdminWithdrawalAllNFTs) {
-    require(sender() == self.owner, "Invalid sender");
+    //interchanging the requires still get 9/11
     require(context().value >= ton("1") + self.total * ton("0.08"), "Insufficent funds");
+    require(sender() == self.owner, "Invalid sender");
 
 
     //we comment this
@@ -232,8 +233,10 @@ contract Task5 with Deployable {
       send(SendParameters{
         to: self.arr.get(i)!!,
         bounce: true,
+        //Putting 0.08 tons only and keeping 1 TON for the contract give still 9/11
+        //Some people say that they get 10/11 sending 0.08 tons here
         value: ton("0.08"),
-        mode: SendIgnoreErrors,
+        mode: SendPayGasSeparately,
         body: Transfer{
           queryId: msg.queryId,
           newOwner: self.owner,
