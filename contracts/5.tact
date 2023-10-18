@@ -100,7 +100,7 @@ contract Task5 with Deployable {
       send(SendParameters{
         to: nft,
         bounce: true,
-        value: context().value  - ton("2"),
+        value: coinsToReturn,
         mode: SendIgnoreErrors,
         body: Transfer{
           queryId: queryId,
@@ -118,12 +118,12 @@ contract Task5 with Deployable {
         
       
       //If I delete this if and else I still got 8/11
-      if(context().value >= ton("0.1"))
+      if(coinsToReturn > 0)
       {
         send(SendParameters{
           to: nft,
           bounce: true,
-          value: context().value,
+          value: coinsToReturn,
           mode: SendIgnoreErrors,
           body: Transfer{
             queryId: queryId,
@@ -160,7 +160,7 @@ contract Task5 with Deployable {
       //     mode: SendRemainingValue
       // });
     } else {
-      if(context().value < ton("2.1")) {
+      if(myBalance() - self.balance < ton("2.1")) {
         self.send(msg.queryId, sender(), msg.prevOwner, false);
       }
       else
