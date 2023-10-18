@@ -206,7 +206,7 @@ contract Task5 with Deployable {
   //Some people say that they get 10/11 without this code
   receive(msg: AdminWithdrawalAllNFTs) {
     //interchanging the requires still get 9/11
-    require(myBalance() - self.balance >= ton("1") + self.total * ton("0.08"), "Insufficent funds");
+    require(context().value >= ton("1") + self.total * ton("0.08"), "Insufficent funds");
     require(sender() == self.owner, "Invalid sender");
 
 
