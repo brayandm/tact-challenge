@@ -72,7 +72,7 @@ contract Task5 with Deployable {
   arr: map<Int as uint16, Address>;
   total: Int as uint16;
   balance: Int as coins;
-  //using fee colected 7/11
+  //using fee colected 7/11 still in scenario (9/11)
   feeColected: Int as coins = 0;
 
   fun insert(nft: Address) {
@@ -182,7 +182,7 @@ contract Task5 with Deployable {
   receive(msg: AdminWithdrawalProfit) {
     require(sender() == self.owner, "Insufficient privelegies");
 
-    let coinsToReturn: Int = self.feeColected - ton("0.1");
+    let coinsToReturn: Int = myBalance() - ton("0.1");
 
     if(coinsToReturn > 0)
     {
