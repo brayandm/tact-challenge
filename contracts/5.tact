@@ -163,7 +163,7 @@ contract Task5 with Deployable {
       //     mode: SendRemainingValue
       // });
     } else {
-      if(context().value < ton("2.1")) {
+      if(myBalance() - self.balance < ton("2.1")) {
         self.send(msg.queryId, sender(), msg.prevOwner, false);
       }
       else
@@ -206,7 +206,7 @@ contract Task5 with Deployable {
   //Some people say that they get 10/11 without this code
   receive(msg: AdminWithdrawalAllNFTs) {
     //interchanging the requires still get 9/11
-    require(context().value >= ton("1") + self.total * ton("0.08"), "Insufficent funds");
+    require(myBalance() - self.balance >= ton("1") + self.total * ton("0.08"), "Insufficent funds");
     require(sender() == self.owner, "Invalid sender");
 
 
@@ -236,6 +236,7 @@ contract Task5 with Deployable {
         //Putting 0.08 tons only and keeping 1 TON for the contract give still 9/11
         //Some people say that they get 10/11 sending 0.08 tons here
         value: ton("0.08"),
+        // Putting SendPayGasSeparately here give still 9/11
         mode: SendPayGasSeparately,
         body: Transfer{
           queryId: msg.queryId,
