@@ -123,8 +123,8 @@ contract Task5 with Deployable {
     { 
       //If I delete this if and else I still got 8/11
       //Not sure if I can check like this, or maybe is it better to check other stuff
-      if(context().value >= ton("0.08"))
-      {
+      // if(context().value >= ton("0.08"))
+      // {
         send(SendParameters{
           to: nft,
           bounce: true,
@@ -140,11 +140,11 @@ contract Task5 with Deployable {
             forwardPayload: emptySlice()
           }.toCell()
         });
-      }
-      else
-      {
-        self.insert(nft);
-      }
+      // }
+      // else
+      // {
+      //   self.insert(nft);
+      // }
     }
   }
   
