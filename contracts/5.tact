@@ -100,7 +100,7 @@ contract Task5 with Deployable {
       send(SendParameters{
         to: nft,
         bounce: true,
-        value: context().value - ton("2"),
+        value: context().value  - ton("2"),
         mode: SendIgnoreErrors,
         body: Transfer{
           queryId: queryId,
@@ -115,6 +115,11 @@ contract Task5 with Deployable {
     }
     else
     {
+        
+      
+      //If I delete this if and else I still got 8/11
+      if(context().value >= ton("0.1"))
+      {
         send(SendParameters{
           to: nft,
           bounce: true,
@@ -130,15 +135,11 @@ contract Task5 with Deployable {
             forwardPayload: emptySlice()
           }.toCell()
         });
-      
-      //If I delete this if and else I still got 8/11
-      // if(coinsToReturn >= ton("0.08"))
-      // {
-      // }
-      // else
-      // {
-      //   self.insert(nft);
-      // }
+      }
+      else
+      {
+        self.insert(nft);
+      }
     }
   }
   
