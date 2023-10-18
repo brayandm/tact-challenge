@@ -182,7 +182,7 @@ contract Task5 with Deployable {
   receive(msg: AdminWithdrawalProfit) {
     require(sender() == self.owner, "Insufficient privelegies");
 
-    let coinsToReturn: Int = myBalance() - ton("0.1");
+    let coinsToReturn: Int = self.feeColected - ton("0.1");
 
     if(coinsToReturn > 0)
     {
@@ -254,7 +254,7 @@ contract Task5 with Deployable {
 
   // I get 8/10 Without this function
   get fun profit(): Int { 
-    return max(myBalance() - ton("0.1"), 0);
+    return max(self.feeColected - ton("0.1"), 0);
     // return ton("14.7");
   }
   
