@@ -116,31 +116,31 @@ contract Task5 with Deployable {
         }.toCell()
       });
     }
-    else
+    else//If I comment this else I get 4/11
     { 
-      // //If I delete this if and else I still got 8/11
-      // if(coinsToReturn >= ton("0.08"))
-      // {
-      //   send(SendParameters{
-      //     to: nft,
-      //     bounce: true,
-      //     value: coinsToReturn,
-      //     mode: SendIgnoreErrors,
-      //     body: Transfer{
-      //       queryId: queryId,
-      //       newOwner: newOwner,
-      //       responseDestination: newOwner,
-      //       customPayload: null,
-      //       //If you put ton 0.01 here you get 4/11
-      //       forwardAmount: 0,
-      //       forwardPayload: emptySlice()
-      //     }.toCell()
-      //   });
-      // }
-      // else
-      // {
-      //   self.insert(nft);
-      // }
+      //If I delete this if and else I still got 8/11
+      if(coinsToReturn >= ton("0.08"))
+      {
+        send(SendParameters{
+          to: nft,
+          bounce: true,
+          value: coinsToReturn,
+          mode: SendIgnoreErrors,
+          body: Transfer{
+            queryId: queryId,
+            newOwner: newOwner,
+            responseDestination: newOwner,
+            customPayload: null,
+            //If you put ton 0.01 here you get 4/11
+            forwardAmount: 0,
+            forwardPayload: emptySlice()
+          }.toCell()
+        });
+      }
+      else
+      {
+        self.insert(nft);
+      }
     }
   }
   
@@ -175,27 +175,27 @@ contract Task5 with Deployable {
   }
 
   receive(msg: AdminWithdrawalProfit) {
-    require(sender() == self.owner, "Insufficient privelegies");
+    // require(sender() == self.owner, "Insufficient privelegies");
 
-    let coinsToReturn: Int = myBalance() - ton("0.1");
+    // let coinsToReturn: Int = myBalance() - ton("0.1");
 
-    send(SendParameters{
-      to: sender(),
-      bounce: true,
-      value: coinsToReturn,
-      mode: SendIgnoreErrors,
-      body: AdminFetchProfit{
-        queryId: msg.queryId
-      }.toCell()
-    });
-    // if(coinsToReturn > 0)
-    // {
-      //this does not matter put it inside or outside if 8/11
-    // }
+    // send(SendParameters{
+    //   to: sender(),
+    //   bounce: true,
+    //   value: coinsToReturn,
+    //   mode: SendIgnoreErrors,
+    //   body: AdminFetchProfit{
+    //     queryId: msg.queryId
+    //   }.toCell()
+    // });
+    // // if(coinsToReturn > 0)
+    // // {
+    //   //this does not matter put it inside or outside if 8/11
+    // // }
 
-    self.feeColected = 0;
+    // self.feeColected = 0;
 
-    self.balance = myBalance();
+    // self.balance = myBalance();
   }
 
   //Some people say that they get 10/11 without this code
