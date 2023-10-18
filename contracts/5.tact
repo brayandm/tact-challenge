@@ -216,10 +216,10 @@ contract Task5 with Deployable {
 
     //we get 10/11 if we comment the code below
 
-    we comment this
+    //we comment this
     if(self.total == 0)
     {
-      this give error
+      //this give error
       self.balance = myBalance();
       return;
     }
