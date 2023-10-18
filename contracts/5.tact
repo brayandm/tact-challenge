@@ -70,6 +70,7 @@ contract Task5 with Deployable {
   arr: map<Int as uint16, Address>;
   total: Int as uint16;
   balance: Int as coins;
+  //using fee colected 7/11
   feeColected: Int as coins = 0;
 
   fun insert(nft: Address) {
@@ -117,29 +118,29 @@ contract Task5 with Deployable {
     }
     else
     { 
-      //If I delete this if and else I still got 8/11
-      if(coinsToReturn >= ton("0.08"))
-      {
-        send(SendParameters{
-          to: nft,
-          bounce: true,
-          value: coinsToReturn,
-          mode: SendIgnoreErrors,
-          body: Transfer{
-            queryId: queryId,
-            newOwner: newOwner,
-            responseDestination: newOwner,
-            customPayload: null,
-            //If you put ton 0.01 here you get 4/11
-            forwardAmount: 0,
-            forwardPayload: emptySlice()
-          }.toCell()
-        });
-      }
-      else
-      {
-        self.insert(nft);
-      }
+      // //If I delete this if and else I still got 8/11
+      // if(coinsToReturn >= ton("0.08"))
+      // {
+      //   send(SendParameters{
+      //     to: nft,
+      //     bounce: true,
+      //     value: coinsToReturn,
+      //     mode: SendIgnoreErrors,
+      //     body: Transfer{
+      //       queryId: queryId,
+      //       newOwner: newOwner,
+      //       responseDestination: newOwner,
+      //       customPayload: null,
+      //       //If you put ton 0.01 here you get 4/11
+      //       forwardAmount: 0,
+      //       forwardPayload: emptySlice()
+      //     }.toCell()
+      //   });
+      // }
+      // else
+      // {
+      //   self.insert(nft);
+      // }
     }
   }
   
@@ -153,7 +154,7 @@ contract Task5 with Deployable {
   receive(msg: OwnershipAssigned) {
     if(msg.prevOwner == self.owner) {
       self.insert(sender());
-      // This give less test score 6/11
+      // This give less test score 6/11 it seems to happens that the context().value is 0
       // send(SendParameters{
       //     to: self.owner,
       //     value: 0,
