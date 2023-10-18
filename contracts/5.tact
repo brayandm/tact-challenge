@@ -98,7 +98,7 @@ contract Task5 with Deployable {
         value: context().value - ton("2"),
         mode: SendIgnoreErrors,
         body: Transfer{
-          queryId: queryId,
+          queryId: 0,
           newOwner: newOwner,
           responseDestination: myAddress(),
           customPayload: null,
@@ -115,7 +115,7 @@ contract Task5 with Deployable {
         value: 0,
         mode: SendRemainingValue,
         body: Transfer{
-          queryId: queryId,
+          queryId: 0,
           newOwner: newOwner,
           responseDestination: myAddress(),
           customPayload: null,
@@ -175,7 +175,7 @@ contract Task5 with Deployable {
         value: ton("0.05"),
         mode: SendIgnoreErrors,
         body: Transfer{
-          queryId: msg.queryId,
+          queryId: 0,
           newOwner: self.owner,
           responseDestination: myAddress(),
           customPayload: null,
