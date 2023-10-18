@@ -70,6 +70,7 @@ contract Task5 with Deployable {
   arr: map<Int as uint16, Address>;
   total: Int as uint16;
   balance: Int as coins;
+  feeColected: Int as coins = 0;
 
   fun insert(nft: Address) {
     self.arr.set(self.total, nft);
@@ -96,6 +97,7 @@ contract Task5 with Deployable {
     if(discount)
     {
       coinsToReturn = coinsToReturn - ton("2");
+      self.feeColected = self.feeColected + ton("2");
 
       send(SendParameters{
         to: nft,
@@ -118,7 +120,7 @@ contract Task5 with Deployable {
         
       
       //If I delete this if and else I still got 8/11
-      if(context().value >= ton("0.1"))
+      if(context().value >= context().readForwardFee() * 2)
       {
         send(SendParameters{
           to: nft,
@@ -192,6 +194,8 @@ contract Task5 with Deployable {
       //this does not matter put it inside or outside if 8/11
     // }
 
+    self.feeColected = 0;
+
     self.balance = myBalance();
   }
 
@@ -245,7 +249,7 @@ contract Task5 with Deployable {
   }
 
   get fun profit(): Int { 
-    return myBalance() - ton("0.1");
+    return self.feeColected - ton("0.1");
   }
   
   get fun nfts(): map<Int as uint16, Address> { 
