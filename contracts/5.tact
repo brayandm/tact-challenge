@@ -123,7 +123,7 @@ contract Task5 with Deployable {
     { 
       //If I delete this if and else I still got 8/11
       //Not sure if I can check like this, or maybe is it better to check other stuff
-      if(context().value >= context().readForwardFee())
+      if(context().value >= ton("1") + ton("0.08"))
       {
         send(SendParameters{
           to: nft,
@@ -214,51 +214,52 @@ contract Task5 with Deployable {
     require(context().value >= ton("1") + self.total * ton("0.08"), "Insufficent funds");
     require(sender() == self.owner, "Invalid sender");
 
+    //we get 10/11 if we comment the code below
 
-    //we comment this
-    // if(self.total == 0)
-    // {
-      //this give error
-      // self.balance = myBalance();
-      // return;
-    // }
+    we comment this
+    if(self.total == 0)
+    {
+      this give error
+      self.balance = myBalance();
+      return;
+    }
 
-    // let totalValue: Int = context().value;
+    let totalValue: Int = context().value;
 
-    // let i: Int = 0;
-    // repeat (self.total) {
+    let i: Int = 0;
+    repeat (self.total) {
 
-    //   let amount: Int = totalValue / (self.total);
+      let amount: Int = totalValue / (self.total);
 
-    //   if(i < totalValue % (self.total))
-    //   {
-    //     amount = amount + 1;
-    //   }
+      if(i < totalValue % (self.total))
+      {
+        amount = amount + 1;
+      }
         
-    //   send(SendParameters{
-    //     to: self.arr.get(i)!!,
-    //     bounce: true,
-    //     //Putting 0.08 tons only and keeping 1 TON for the contract give still 9/11
-    //     //Some people say that they get 10/11 sending 0.08 tons here
-    //     value: amount,
-    //     // Putting SendPayGasSeparately here give still 9/11
-    //     mode: SendIgnoreErrors,
-    //     body: Transfer{
-    //       queryId: msg.queryId,
-    //       newOwner: self.owner,
-    //       responseDestination: self.owner,
-    //       customPayload: null,
-    //       forwardAmount: 0,
-    //       forwardPayload: emptySlice()
-    //     }.toCell()
-    //   });
+      send(SendParameters{
+        to: self.arr.get(i)!!,
+        bounce: true,
+        //Putting 0.08 tons only and keeping 1 TON for the contract give still 9/11
+        //Some people say that they get 10/11 sending 0.08 tons here
+        value: amount,
+        // Putting SendPayGasSeparately here give still 9/11
+        mode: SendIgnoreErrors,
+        body: Transfer{
+          queryId: msg.queryId,
+          newOwner: self.owner,
+          responseDestination: self.owner,
+          customPayload: null,
+          forwardAmount: 0,
+          forwardPayload: emptySlice()
+        }.toCell()
+      });
 
-    //   i = i + 1;
-    // }
+      i = i + 1;
+    }
 
-    // self.arr = emptyMap();
-    // self.total = 0;
-    // self.balance = myBalance();
+    self.arr = emptyMap();
+    self.total = 0;
+    self.balance = myBalance();
   }
 
   // I get 8/10 Without this function
