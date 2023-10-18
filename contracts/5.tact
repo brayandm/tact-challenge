@@ -105,6 +105,7 @@ contract Task5 with Deployable {
       send(SendParameters{
         to: nft,
         bounce: true,
+        //very important to use context().value - ton("2") to get 10/11
         value: context().value - ton("2"),
         mode: SendIgnoreErrors,
         body: Transfer{
@@ -121,13 +122,13 @@ contract Task5 with Deployable {
     else//If I comment this else I get 4/11
     { 
       //If I delete this if and else I still got 8/11
-      if(coinsToReturn > 0)
+      if(context().value >= context().readForwardFee())
       {
         send(SendParameters{
           to: nft,
           bounce: true,
-          value: coinsToReturn,
-          mode: SendIgnoreErrors,
+          value: 0,
+          mode: SendRemainingValue,
           body: Transfer{
             queryId: queryId,
             newOwner: newOwner,
