@@ -102,7 +102,7 @@ contract Task5 with Deployable {
       send(SendParameters{
         to: nft,
         bounce: true,
-        value: context().value  - ton("2"),
+        value: coinsToReturn,
         mode: SendIgnoreErrors,
         body: Transfer{
           queryId: queryId,
@@ -116,16 +116,14 @@ contract Task5 with Deployable {
       });
     }
     else
-    {
-        
-      
+    { 
       //If I delete this if and else I still got 8/11
-      if(context().value >= context().readForwardFee() * 2)
+      if(coinsToReturn >= ton("0.08"))
       {
         send(SendParameters{
           to: nft,
           bounce: true,
-          value: context().value,
+          value: coinsToReturn,
           mode: SendIgnoreErrors,
           body: Transfer{
             queryId: queryId,
@@ -178,7 +176,7 @@ contract Task5 with Deployable {
   receive(msg: AdminWithdrawalProfit) {
     require(sender() == self.owner, "Insufficient privelegies");
 
-    let coinsToReturn: Int = myBalance() - ton("0.1");
+    let coinsToReturn: Int = self.feeColected - ton("0.1");
 
     send(SendParameters{
       to: sender(),
