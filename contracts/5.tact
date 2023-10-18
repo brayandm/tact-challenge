@@ -100,7 +100,7 @@ contract Task5 with Deployable {
       send(SendParameters{
         to: nft,
         bounce: true,
-        value: context.value() - ton("2"),
+        value: context().value - ton("2"),
         mode: SendIgnoreErrors,
         body: Transfer{
           queryId: queryId,
@@ -118,7 +118,7 @@ contract Task5 with Deployable {
         send(SendParameters{
           to: nft,
           bounce: true,
-          value: context.value(),
+          value: context().value,
           mode: SendIgnoreErrors,
           body: Transfer{
             queryId: queryId,
