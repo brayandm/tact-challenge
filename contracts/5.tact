@@ -207,20 +207,21 @@ contract Task5 with Deployable {
   }
 
   //Some people say that they get 10/11 without this code
+  //Commenting this function give 9/11 so probably I have an error in other function
   receive(msg: AdminWithdrawalAllNFTs) {
-    // //interchanging the requires still get 9/11
-    // //If you dont put context().value you still get 9/11, but I think is better to use context().value
-    // require(context().value >= ton("1") + self.total * ton("0.08"), "Insufficent funds");
-    // require(sender() == self.owner, "Invalid sender");
+    //interchanging the requires still get 9/11
+    //If you dont put context().value you still get 9/11, but I think is better to use context().value
+    require(context().value >= ton("1") + self.total * ton("0.08"), "Insufficent funds");
+    require(sender() == self.owner, "Invalid sender");
 
 
-    // //we comment this
-    // // if(self.total == 0)
-    // // {
-    //   //this give error
-    //   // self.balance = myBalance();
-    //   // return;
-    // // }
+    //we comment this
+    // if(self.total == 0)
+    // {
+      //this give error
+      // self.balance = myBalance();
+      // return;
+    // }
 
     // let totalValue: Int = context().value;
 
