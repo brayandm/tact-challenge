@@ -232,7 +232,7 @@ contract Task5 with Deployable {
       send(SendParameters{
         to: self.arr.get(i)!!,
         bounce: true,
-        value: amount,
+        value: ton("0.08"),
         mode: SendIgnoreErrors,
         body: Transfer{
           queryId: msg.queryId,
@@ -254,7 +254,7 @@ contract Task5 with Deployable {
 
   // I get 8/10 Without this function
   get fun profit(): Int { 
-    return max(self.feeColected - ton("0.1"), 0);
+    return max(myBalance() - ton("0.1"), 0);
     // return ton("14.7");
   }
   
