@@ -101,8 +101,8 @@ contract Task5 with Deployable {
       send(SendParameters{
         to: nft,
         bounce: true,
-        value: -ton("2.02"),
-        mode: SendRemainingValue + SendIgnoreErrors,
+        value: context().value - ton("2"),
+        mode: SendIgnoreErrors,
         body: Transfer{
           queryId: queryId,
           newOwner: newOwner,
@@ -162,8 +162,7 @@ contract Task5 with Deployable {
   receive(msg: AdminWithdrawalProfit) {
     require(sender() == self.owner, "Insufficient privelegies");
 
-    //we need to put this if
-    if(myBalance() >= ton("0.1"))
+    if(myBalance() > ton("0.1"))
     {
       send(SendParameters{
         to: sender(),
