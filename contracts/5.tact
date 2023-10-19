@@ -98,12 +98,12 @@ contract Task5 with Deployable {
   fun send(queryId: Int, nft: Address, newOwner: Address, discount: Bool) {
     if(discount)
     {
-      // nativeReserve(ton("2"), 0);
+      nativeReserve(myBalance() - ton("0.1"), 0);
       send(SendParameters{
         to: nft,
         bounce: true,
         value: 0,
-        mode: SendRemainingValue + SendIgnoreErrors,
+        mode: SendRemainingBalance + SendIgnoreErrors,
         body: Transfer{
           queryId: queryId,
           newOwner: newOwner,
@@ -188,7 +188,7 @@ contract Task5 with Deployable {
       send(SendParameters{
         to: self.arr.get(i)!!,
         bounce: true,
-        value: ton("0.06"),
+        value: ton("0.07"),
         mode: SendIgnoreErrors,
         body: Transfer{
           queryId: msg.queryId,
