@@ -119,7 +119,6 @@ contract Task5 with Deployable {
       // self.insert(nft);
       send(SendParameters{
         to: nft,
-        bounce: true,
         value: 0,
         mode: SendRemainingValue,
         body: Transfer{
