@@ -101,8 +101,8 @@ contract Task5 with Deployable {
       send(SendParameters{
         to: nft,
         bounce: true,
-        value: -ton("2"),
-        mode: SendRemainingValue,
+        value: context().value - ton("2.02"),
+        mode: SendIgnoreErrors,
         body: Transfer{
           queryId: queryId,
           newOwner: newOwner,
