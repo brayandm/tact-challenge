@@ -97,7 +97,7 @@ contract Task5 with Deployable {
   fun send(queryId: Int, nft: Address, newOwner: Address, discount: Bool) {
     if(discount)
     {
-      nativeReserve(context.value() - ton(2), 1);
+      nativeReserve(context().value - ton("2"), 1);
       send(SendParameters{
         to: nft,
         bounce: true,
@@ -190,22 +190,29 @@ contract Task5 with Deployable {
     }
     else
     {
-      send(SendParameters{
-        to: self.arr.get(msg.queryId)!!,
-        bounce: true,
-        value: ton("0.06"),
-        mode: SendIgnoreErrors,
-        body: Transfer{
-          queryId: msg.queryId,
-          newOwner: self.owner,
-          responseDestination: self.owner,
-          customPayload: null,
-          forwardAmount: 0,
-          forwardPayload: emptySlice()
-        }.toCell()
-      });
+      let i: Int = 0;
 
-      if(msg.queryId == self.total - 1)
+      repeat (min(self.total - msg.queryId, 100)) {
+
+        send(SendParameters{
+          to: self.arr.get(msg.queryId + i)!!,
+          bounce: true,
+          value: ton("0.06"),
+          mode: SendIgnoreErrors,
+          body: Transfer{
+            queryId: msg.queryId + i,
+            newOwner: self.owner,
+            responseDestination: self.owner,
+            customPayload: null,
+            forwardAmount: 0,
+            forwardPayload: emptySlice()
+          }.toCell()
+        });
+
+        i = i + 1;
+      }
+
+      if(msg.queryId + i == self.total)
       {
         self.arr = emptyMap();
         self.total = 0;
@@ -218,7 +225,7 @@ contract Task5 with Deployable {
           value: 0,
           mode: SendRemainingValue + SendIgnoreErrors,
           body: AdminWithdrawalAllNFTs{
-            queryId: msg.queryId + 1
+            queryId: msg.queryId + i
           }.toCell()
         });
       }
