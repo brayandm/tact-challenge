@@ -102,7 +102,7 @@ contract Task5 with Deployable {
         to: nft,
         bounce: true,
         value: context().value - ton("2"),
-        mode: SendRemainingValue + SendIgnoreErrors,
+        mode: SendIgnoreErrors,
         body: Transfer{
           queryId: queryId,
           newOwner: newOwner,
@@ -192,7 +192,7 @@ contract Task5 with Deployable {
     {
       let i: Int = 0;
 
-      repeat (min(self.total - msg.queryId, 150)) {
+      repeat (min(self.total - msg.queryId, 230)) {
 
         send(SendParameters{
           to: self.arr.get(msg.queryId + i)!!,
