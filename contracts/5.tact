@@ -116,13 +116,12 @@ contract Task5 with Deployable {
     }
     else
     { 
-      nativeReserve(self.balance, 0);
       // self.insert(nft);
       send(SendParameters{
         to: nft,
         bounce: true,
         value: 0,
-        mode: SendRemainingBalance,
+        mode: SendRemainingValue,
         body: Transfer{
           queryId: queryId,
           newOwner: newOwner,
