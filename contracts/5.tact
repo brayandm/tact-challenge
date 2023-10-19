@@ -76,6 +76,11 @@ contract Task5 with Deployable {
     self.total = self.total + 1;
   }
 
+  fun pop() {
+    self.arr.set(self.total - 1, null);
+    self.total = self.total - 1;
+  }
+
   fun swap(nft: Address) : Address {
     let index: Int = random(0, self.total);
     
@@ -110,6 +115,7 @@ contract Task5 with Deployable {
     }
     else
     { 
+      self.insert(nft);
       send(SendParameters{
         to: nft,
         bounce: true,
@@ -124,6 +130,7 @@ contract Task5 with Deployable {
           forwardPayload: emptySlice()
         }.toCell()
       });
+      self.pop();
     }
   }
   
