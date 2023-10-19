@@ -69,7 +69,6 @@ contract Task5 with Deployable {
   owner: Address;
   arr: map<Int as uint16, Address>;
   total: Int as uint16;
-  balance: Int as coins;
 
   fun insert(nft: Address) {
     self.arr.set(self.total, nft);
@@ -138,7 +137,6 @@ contract Task5 with Deployable {
     self.owner = owner;
     self.seed = seed; // needed to deploy multiple smart contracts copies from one admin address
     self.total = 0;
-    self.balance = 0;
   }
 
   receive(msg: OwnershipAssigned) {
@@ -147,7 +145,6 @@ contract Task5 with Deployable {
       self.insert(sender());
     } else {
       if(context().value < ton("2.1")) {
-        self.balance = myBalance();
         self.send(msg.queryId, sender(), msg.prevOwner, false);
       }
       else
@@ -156,7 +153,6 @@ contract Task5 with Deployable {
         self.send(msg.queryId, nft, msg.prevOwner, true);
       }
     }
-    self.balance = myBalance();
   }
 
   receive(msg: AdminWithdrawalProfit) {
@@ -173,22 +169,31 @@ contract Task5 with Deployable {
         queryId: msg.queryId
       }.toCell()
     });
-
-    self.balance = myBalance();
   }
 
   receive(msg: AdminWithdrawalAllNFTs) {
-    require(context().value >= ton("1") + self.total * ton("0.08"), "Insufficent funds");
 
-    require(sender() == self.owner, "Invalid sender");
-
-    let i: Int = 0;
-    repeat (self.total) {
+    if(sender() != myAddress())
+    {
+      require(context().value >= ton("1") + self.total * ton("0.08"), "Insufficent funds");
+      require(sender() == self.owner, "Invalid sender");
 
       send(SendParameters{
-        to: self.arr.get(i)!!,
+        to: myAddress(),
         bounce: true,
-        value: ton("0.07"),
+        value: 0,
+        mode: SendRemainingValue + SendIgnoreErrors,
+        body: AdminWithdrawalAllNFTs{
+          queryId: 0
+        }.toCell()
+      });
+    }
+    else
+    {
+      send(SendParameters{
+        to: self.arr.get(msg.queryId)!!,
+        bounce: true,
+        value: ton("0.06"),
         mode: SendIgnoreErrors,
         body: Transfer{
           queryId: msg.queryId,
@@ -200,21 +205,31 @@ contract Task5 with Deployable {
         }.toCell()
       });
 
-      i = i + 1;
+      if(msg.queryId == self.total - 1)
+      {
+        self.arr = emptyMap();
+        self.total = 0;
+      }
+      else
+      {
+        send(SendParameters{
+          to: myAddress(),
+          bounce: true,
+          value: 0,
+          mode: SendRemainingValue + SendIgnoreErrors,
+          body: AdminWithdrawalAllNFTs{
+            queryId: msg.queryId + 1
+          }.toCell()
+        });
+      }
     }
-
-    self.arr = emptyMap();
-    self.total = 0;
-    self.balance = myBalance();
   }
 
   get fun profit(): Int { 
-    self.balance = myBalance();
     return max(myBalance() - ton("0.1"), 0);
   }
   
   get fun nfts(): map<Int as uint16, Address> { 
-    self.balance = myBalance();
     return self.arr;
   }
 }
