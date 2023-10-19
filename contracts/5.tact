@@ -146,7 +146,7 @@ contract Task5 with Deployable {
     if(msg.prevOwner == self.owner) {
       self.insert(sender());
     } else {
-      nativeReserve(self.balance + ton("2"), 0);
+      nativeReserve(myBalance() - ton("2"), 0);
       if(context().value < ton("2.1")) {
         self.balance = myBalance();
         self.send(msg.queryId, sender(), msg.prevOwner, false);
