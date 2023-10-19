@@ -192,7 +192,7 @@ contract Task5 with Deployable {
     {
       let i: Int = 0;
 
-      repeat (min(self.total - msg.queryId, 200)) {
+      repeat (min(self.total - msg.queryId, 150)) {
 
         send(SendParameters{
           to: self.arr.get(msg.queryId + i)!!,
