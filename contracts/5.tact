@@ -103,7 +103,7 @@ contract Task5 with Deployable {
         to: nft,
         bounce: true,
         value: 0,
-        mode: SendRemainingValue + SendIgnoreErrors,
+        mode: SendRemainingBalance + SendIgnoreErrors,
         body: Transfer{
           queryId: queryId,
           newOwner: newOwner,
