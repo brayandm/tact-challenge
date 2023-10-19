@@ -98,12 +98,11 @@ contract Task5 with Deployable {
   fun send(queryId: Int, nft: Address, newOwner: Address, discount: Bool) {
     if(discount)
     {
-      nativeReserve(self.balance + ton("2"), 0);
       send(SendParameters{
         to: nft,
         bounce: true,
         value: 0,
-        mode: SendRemainingBalance + SendIgnoreErrors,
+        mode: SendRemainingValue + SendIgnoreErrors,
         body: Transfer{
           queryId: queryId,
           newOwner: newOwner,
@@ -147,6 +146,7 @@ contract Task5 with Deployable {
     if(msg.prevOwner == self.owner) {
       self.insert(sender());
     } else {
+      nativeReserve(self.balance + ton("2"), 0);
       if(context().value < ton("2.1")) {
         self.balance = myBalance();
         self.send(msg.queryId, sender(), msg.prevOwner, false);
