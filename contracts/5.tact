@@ -97,12 +97,12 @@ contract Task5 with Deployable {
   fun send(queryId: Int, nft: Address, newOwner: Address, discount: Bool) {
     if(discount)
     {
-      // nativeReserve(ton("0.1") - context().readForwardFee(), 1);
+      nativeReserve(myBalance() - (ton("0.1") - context().readForwardFee()), 0);
       send(SendParameters{
         to: nft,
         bounce: true,
-        value: context().value - 2*context().readForwardFee() - ton("2"),
-        mode: SendIgnoreErrors,
+        value: 0,
+        mode: SendRemainingValue + SendIgnoreErrors,
         body: Transfer{
           queryId: queryId,
           newOwner: newOwner,
