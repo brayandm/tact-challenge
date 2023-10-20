@@ -101,7 +101,7 @@ contract Task5 with Deployable {
       send(SendParameters{
         to: nft,
         bounce: true,
-        value: (ton("0.1") - 2*context().readForwardFee()),
+        value: (ton("0.1") - context().readForwardFee()),
         mode: SendIgnoreErrors,
         body: Transfer{
           queryId: queryId,
